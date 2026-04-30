@@ -1,26 +1,101 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "../styles/tokens.css";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-canvas: rgb(var(--color-canvas));
+  --color-surface-1: rgb(var(--color-surface-1));
+  --color-surface-2: rgb(var(--color-surface-2));
+  --color-ink-strong: rgb(var(--color-ink-strong));
+  --color-ink-muted: rgb(var(--color-ink-muted));
+  --color-ink-inverse: rgb(var(--color-ink-inverse));
+  --color-border: rgb(var(--color-border));
+  --color-brand-50: rgb(var(--color-brand-50));
+  --color-brand-100: rgb(var(--color-brand-100));
+  --color-brand-300: rgb(var(--color-brand-300));
+  --color-brand-500: rgb(var(--color-brand-500));
+  --color-brand-700: rgb(var(--color-brand-700));
+  --color-brand-900: rgb(var(--color-brand-900));
+  --font-sans: var(--font-family-sans);
+  --font-display: var(--font-family-display);
+  --font-mono: var(--font-family-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* Header fixo (~64px) + safe-area: âncoras não ficam coladas sob a barra */
+  scroll-padding-top: calc(4.5rem + env(safe-area-inset-top, 0px));
+}
+
+html,
+body {
+  min-height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background-color: rgb(var(--color-canvas));
+  color: rgb(var(--color-ink-strong));
+  font-family: var(--font-family-sans);
+}
+
+@layer base {
+  button:enabled {
+    cursor: pointer;
+  }
+}
+
+/* Final CTA: troca de aba do formulário */
+@keyframes cta-tab-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/**
+ * Gradient “border” for cards: outer shell uses --gradient-card-border (diagonal TL→BR) + 1px padding;
+ * inner surface uses radius outer−1px so the ring stays parallel.
+ * Tokens: --gradient-card-border, --shadow-card-elev, --shadow-card-elev-lg (tokens.css)
+ */
+.card-border-shell {
+  overflow: hidden;
+  padding: 1px;
+  background-image: var(--gradient-card-border);
+  box-shadow: var(--shadow-card-elev);
+}
+
+.card-border-shell.card-border-shell--elev-lg {
+  box-shadow: var(--shadow-card-elev-lg);
+}
+
+.card-border-shell--no-elev {
+  box-shadow: none;
+}
+
+.card-border-shell.card-border-r12 {
+  border-radius: 12px;
+}
+
+.card-border-shell.card-border-r20 {
+  border-radius: 20px;
+}
+
+.card-border-inner {
+  overflow: hidden;
+}
+
+.card-border-inner.card-border-r12 {
+  border-radius: 11px;
+}
+
+.card-border-inner.card-border-r20 {
+  border-radius: 19px;
 }

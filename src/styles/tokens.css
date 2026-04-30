@@ -1,0 +1,79 @@
+:root {
+  /* Brand colors (Ybera PRO) */
+  --color-brand-50: 241 252 247;
+  --color-brand-100: 210 246 228;
+  --color-brand-300: 86 216 155;
+  --color-brand-500: 17 163 105;
+  --color-brand-700: 10 109 71;
+  --color-brand-900: 5 60 40;
+  --color-accent-gold: 212 175 55;
+
+  /* Neutral palette */
+  --color-canvas: 248 249 251;
+  --color-surface-1: 255 255 255;
+  --color-surface-2: 241 245 249;
+  --color-ink-strong: 15 23 42;
+  --color-ink-muted: 71 85 105;
+  --color-ink-inverse: 248 250 252;
+  --color-border: 203 213 225;
+
+  /* Typography */
+  --font-family-display: var(--font-syne), "Segoe UI", sans-serif;
+  --font-family-sans: var(--font-nunito-sans), "Segoe UI", sans-serif;
+  --font-family-mono: var(--font-geist), "SFMono-Regular", monospace;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+
+  /* Container */
+  --container-default: 72rem;
+  --container-narrow: 56rem;
+  --container-wide: 80rem;
+  --container-padding-x: 1rem;
+  --container-padding-x-lg: 1.5rem;
+
+  /* Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgb(15 23 42 / 0.06);
+  --shadow-md: 0 8px 24px rgb(15 23 42 / 0.08);
+  --shadow-lg: 0 16px 40px rgb(15 23 42 / 0.12);
+
+  /* Card frame: 1px ring — teal no canto superior-esquerdo; clareia em diagonal e termina em 0% opacidade (sem branco sólido na borda). */
+  --gradient-card-border: linear-gradient(
+    to bottom right,
+    #3f9896 0%,
+    rgba(160, 210, 209, 0.48) 38%,
+    rgba(255, 255, 255, 0.45) 68%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  /* Sombras dos cards: blur maior + opacidade menor = mais suave */
+  --shadow-card-elev:
+    0 1px 2px rgba(64, 81, 81, 0.04),
+    0 8px 28px rgba(64, 81, 81, 0.055);
+  --shadow-card-elev-lg:
+    0 1px 3px rgba(64, 81, 81, 0.04),
+    0 12px 36px rgba(64, 81, 81, 0.06);
+}
