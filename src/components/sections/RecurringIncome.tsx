@@ -16,7 +16,7 @@ export function RecurringIncome() {
             <h2 className="font-display text-[28px] font-semibold leading-9 text-[#1e1e1f] lg:text-[32px] lg:leading-10">
               Transforme cada cliente em uma fonte de renda recorrente
             </h2>
-            <p className="font-sans text-base leading-6 text-[#505052] lg:text-lg">
+            <p className="font-sans text-base leading-6 text-[#505052] opacity-80 lg:text-lg">
               A recompra constante aumenta seu faturamento sem depender de novas vendas o tempo todo.
             </p>
           </header>

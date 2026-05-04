@@ -64,11 +64,11 @@ export function AppPreview() {
               <h2 className="font-display text-xl font-semibold leading-7 text-[#1e1e1f] lg:text-2xl lg:leading-8">
                 Acompanhe suas vendas e seus ganhos de qualquer lugar
               </h2>
-              <p className="font-sans text-base leading-6 text-[#505052] lg:text-lg">
+              <p className="font-sans text-base leading-6 text-[#505052] opacity-80 lg:text-lg">
                 Distribuidores gerenciam a operação pelo web enquanto representantes e profissionais
                 atuam pelo app no dia a dia.
               </p>
-              <p className="font-sans text-base leading-6 text-[#505052] lg:text-lg">
+              <p className="font-sans text-base leading-6 text-[#505052] opacity-80 lg:text-lg">
                 Acompanhe suas vendas e solicite seus ganhos direto pelo sistema, de onde estiver.
               </p>
             </header>

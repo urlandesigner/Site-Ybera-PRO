@@ -1,13 +1,12 @@
 import { Container } from "@/components/layout/Container";
-
-const imgChevron =
-  "https://www.figma.com/api/mcp/asset/db562008-06cc-4237-a23a-9bc746115eb3";
+import { FaIcon } from "@/components/icons/FaIcon";
+import { faArrowRight } from "@/lib/fa-icons";
 
 export function EcosystemStrip() {
   return (
     <section
       id="ecosystem-strip"
-      className="flex min-h-[100px] items-center border-y border-white/[0.07] bg-[#104443] py-6 text-white md:h-[100px] md:py-0"
+      className="flex min-h-[100px] items-center border-y border-white/[0.07] bg-[#1f6665] py-6 text-white md:h-[100px] md:py-0"
     >
       <Container className="flex w-full items-center justify-center">
         <div className="flex flex-col items-center justify-center gap-5 md:flex-row md:gap-[60px]">
@@ -21,11 +20,11 @@ export function EcosystemStrip() {
             <span className="font-display text-xl font-bold leading-7 tracking-[-0.3px] whitespace-nowrap md:text-2xl md:leading-[30px]">
               Distribuidor
             </span>
-            <img src={imgChevron} alt="" width={20} height={20} className="size-5 shrink-0 object-contain" />
+            <FaIcon icon={faArrowRight} className="size-5 shrink-0 text-[rgba(194,255,254,0.85)]" aria-hidden />
             <span className="font-display text-xl font-bold leading-7 tracking-[-0.3px] whitespace-nowrap md:text-2xl md:leading-[30px]">
               Representante
             </span>
-            <img src={imgChevron} alt="" width={20} height={20} className="size-5 shrink-0 object-contain" />
+            <FaIcon icon={faArrowRight} className="size-5 shrink-0 text-[rgba(194,255,254,0.85)]" aria-hidden />
             <span className="font-display text-xl font-bold leading-7 tracking-[-0.3px] whitespace-nowrap md:text-2xl md:leading-[30px]">
               Profissional
             </span>

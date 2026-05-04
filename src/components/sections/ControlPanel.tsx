@@ -1,5 +1,7 @@
 import { Container } from "@/components/layout/Container";
+import { faCheck } from "@/lib/fa-icons";
 import { Section } from "@/components/layout/Section";
+import { FaIcon } from "@/components/icons/FaIcon";
 
 export function ControlPanel() {
   const imgScreen = "https://www.figma.com/api/mcp/asset/bf43b444-1aae-4d5c-87a5-cbf8778cda5a";
@@ -29,7 +31,7 @@ export function ControlPanel() {
               <h2 className="font-display text-[28px] font-semibold leading-9 text-[#1e1e1f] lg:text-[32px] lg:leading-10">
                 Controle sua carteira e saiba exatamente onde está o seu dinheiro
               </h2>
-              <p className="font-sans text-base leading-6 text-[#505052] lg:text-lg">
+              <p className="font-sans text-base leading-6 text-[#505052] opacity-80 lg:text-lg">
                 Veja quem compra, quem parou de comprar e o que fazer para recuperar vendas antes de
                 perder clientes.
               </p>
@@ -40,7 +42,7 @@ export function ControlPanel() {
                 <div key={item} className="card-border-shell card-border-r12">
                   <div className="card-border-inner card-border-r12 flex h-[52px] items-center gap-3 bg-white pl-3 pr-6 py-2">
                     <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#4aaaa91a] text-[#1f6665]">
-                      ✓
+                      <FaIcon icon={faCheck} className="h-4 w-4" aria-hidden />
                     </span>
                     <span className="font-sans text-base font-semibold leading-5 text-[#1f6665]">{item}</span>
                   </div>

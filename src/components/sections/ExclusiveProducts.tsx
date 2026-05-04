@@ -28,7 +28,7 @@ export function ExclusiveProducts() {
               <h2 className="font-display text-[28px] font-semibold leading-9 text-[#1e1e1f] [font-feature-settings:'lnum'_1,'tnum'_1] lg:text-[32px] lg:leading-10">
                 Venda produtos que não estão disponíveis para o consumidor final
               </h2>
-              <p className="font-sans text-base leading-6 text-[#505052] lg:text-lg lg:leading-6">
+              <p className="font-sans text-base leading-6 text-[#505052] opacity-80 lg:text-lg lg:leading-6">
                 Mais valor, mais margem e menos concorrência direta.
               </p>
             </div>

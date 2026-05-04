@@ -1,39 +1,25 @@
 import { Container } from "@/components/layout/Container";
+import { faArrowRight } from "@/lib/fa-icons";
 import { Section } from "@/components/layout/Section";
+import { FaIcon } from "@/components/icons/FaIcon";
 
 function ListArrowIcon() {
   return (
     <span className="inline-flex size-4 shrink-0 items-center justify-center text-[#b0afb2]" aria-hidden>
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M2 6h8M7 3l3 3-3 3"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <FaIcon icon={faArrowRight} className="h-3 w-3" />
     </span>
   );
 }
 
-/** Figma: 12px arrow inside 24×24 (solid) or 16×16 (soft) hit box */
-function CtaChevronIcon({ variant }: { variant: "brandSolid" | "brandSoft" }) {
+/** Seta do CTA — `faArrowRight` */
+function CtaArrowIcon({ variant }: { variant: "brandSolid" | "brandSoft" }) {
   const wrap =
     variant === "brandSolid"
       ? "inline-flex size-6 shrink-0 items-center justify-center text-white"
       : "inline-flex size-4 shrink-0 items-center justify-center text-[#1f6665]";
   return (
     <span className={wrap} aria-hidden>
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M2 6h8M7 3l3 3-3 3"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <FaIcon icon={faArrowRight} className="h-3 w-3" />
     </span>
   );
 }
@@ -121,7 +107,7 @@ function AudienceCardCta({ card }: { card: AudienceCard }) {
       ) : (
         <span className="whitespace-nowrap font-semibold">{card.ctaText}</span>
       )}
-      <CtaChevronIcon variant={card.ctaVariant} />
+      <CtaArrowIcon variant={card.ctaVariant} />
     </button>
   );
 }
@@ -138,7 +124,7 @@ export function AudienceTabs() {
             <h2 className="font-display text-[28px] font-semibold leading-9 text-[#1e1e1f] lg:text-[32px] lg:leading-10">
               Se você quer vender mais e ganhar mais, o PRO é para você
             </h2>
-            <p className="font-sans text-base leading-6 text-[#505052] lg:text-lg">
+            <p className="font-sans text-base leading-6 text-[#505052] opacity-80 lg:text-lg">
               Cada perfil atua com o que precisa para aumentar vendas, ativar clientes e gerar mais lucro.
             </p>
           </header>

@@ -1,24 +1,30 @@
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
+import { FaIcon } from "@/components/icons/FaIcon";
+import { GlassGlowSurface } from "@/components/ui/GlassGlowSurface";
+import { faBriefcase, faCheck, faUser, faUsers } from "@/lib/fa-icons";
 
 export function Benefits() {
   const cards = [
     {
       title: "Para distribuidores",
       subtitle: "Tenha controle total da sua operação",
+      icon: faUser,
       points: ["Mais controle da carteira", "Mais recompra", "Mais previsibilidade de receita"],
     },
     {
       title: "Para profissionais",
       subtitle: "Compre melhor e venda mais",
+      icon: faUsers,
       points: ["Compra mais organizada", "Mais benefícios", "Mais lucro no dia a dia"],
     },
     {
       title: "Para representantes",
       subtitle: "Expanda sua carteira com eficiência",
+      icon: faBriefcase,
       points: ["Mais ativações", "Mais vendas", "Mais produtividade"],
     },
-  ];
+  ] as const;
 
   return (
     <Section id="benefits" className="bg-white py-14 md:py-20 lg:py-[100px]">
@@ -29,7 +35,7 @@ export function Benefits() {
             <h2 className="font-display text-[28px] font-semibold leading-9 text-[#1e1e1f] lg:text-[32px] lg:leading-10">
               O que muda quando você usa o PRO
             </h2>
-            <p className="font-sans text-base leading-6 text-[#505052] lg:text-lg">
+            <p className="font-sans text-base leading-6 text-[#505052] opacity-80 lg:text-lg">
               O PRO organiza sua operação e aumenta a eficiência em todos os níveis.
             </p>
           </header>
@@ -38,28 +44,30 @@ export function Benefits() {
             {cards.map((card) => (
               <article key={card.title} className="card-border-shell card-border-shell--elev-lg card-border-r20">
                 <div
-                  className="card-border-inner card-border-r20 relative overflow-hidden p-6 text-white"
+                  className="card-border-inner card-border-r20 relative overflow-hidden text-white"
                   style={{
                     backgroundImage:
                       "radial-gradient(ellipse 70% 60% at 88% -6%, rgba(255,255,255,0.22), transparent 52%), radial-gradient(ellipse 58% 52% at 100% 4%, rgba(255,255,255,0.12), transparent 48%), linear-gradient(100.631deg, rgb(27,128,126) 1.99%, rgb(52,147,146) 98.1%)",
                   }}
                 >
-                  <div
-                    className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl"
-                    style={{ backgroundColor: "rgba(250, 249, 252, 0.2)" }}
-                  >
-                    +
-                  </div>
-                  <h3 className="font-display text-lg font-bold leading-6">{card.title}</h3>
-                  <p className="mt-3 font-sans text-base leading-5 text-[#c2fffe]">{card.subtitle}</p>
-                  <ul className="mt-6 space-y-4">
-                    {card.points.map((point) => (
-                      <li key={point} className="flex items-center gap-3 font-sans text-sm leading-[18px]">
-                        <span className="text-white/40">→</span>
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
+                  <GlassGlowSurface className="p-6">
+                    <div
+                      className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl text-white"
+                      style={{ backgroundColor: "rgba(250, 249, 252, 0.2)" }}
+                    >
+                      <FaIcon icon={card.icon} className="h-5 w-5" aria-hidden />
+                    </div>
+                    <h3 className="font-display text-lg font-bold leading-6">{card.title}</h3>
+                    <p className="mt-3 font-sans text-base leading-5 text-[#c2fffe]">{card.subtitle}</p>
+                    <ul className="mt-6 space-y-4">
+                      {card.points.map((point) => (
+                        <li key={point} className="flex items-center gap-3 font-sans text-sm leading-[18px]">
+                          <FaIcon icon={faCheck} className="h-3.5 w-3.5 shrink-0 text-white/90" aria-hidden />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </GlassGlowSurface>
                 </div>
               </article>
             ))}

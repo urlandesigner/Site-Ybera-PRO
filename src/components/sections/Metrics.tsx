@@ -15,7 +15,7 @@ export function Metrics() {
                 Mais de 1 milhão de salões já trabalham com produtos Ybera
               </h2>
             </header>
-            <p className="font-sans text-base leading-6 text-[#505052] lg:text-lg">
+            <p className="font-sans text-base leading-6 text-[#505052] opacity-80 lg:text-lg">
               Presença global e uma operação validada em mais de 53 países.
             </p>
           </div>

@@ -4,7 +4,9 @@ import type { KeyboardEvent } from "react";
 import { useId, useState } from "react";
 
 import { Container } from "@/components/layout/Container";
+import { faArrowRight, faCheck } from "@/lib/fa-icons";
 import { Section } from "@/components/layout/Section";
+import { FaIcon } from "@/components/icons/FaIcon";
 
 type ProfileTab = "distribuidor" | "representante" | "profissional";
 
@@ -120,7 +122,7 @@ export function FinalCTA() {
               <h2 className="max-w-[756px] font-display text-[28px] font-semibold leading-[34px] text-[#c2fffe] sm:text-[34px] sm:leading-[40px] lg:text-[40px] lg:leading-[48px]">
                 Comece agora a gerar lucro recorrente com a maior comissão do mercado
               </h2>
-              <p className="max-w-[547px] font-sans text-base leading-6 text-white lg:text-lg">
+              <p className="max-w-[547px] font-sans text-base leading-6 text-white opacity-80 lg:text-lg">
                 Crie sua conta, acompanhe suas vendas e saque suas comissões.
               </p>
             </div>
@@ -134,7 +136,7 @@ export function FinalCTA() {
                 <div key={item} className="card-border-shell card-border-r12 w-full lg:w-fit">
                   <div className="card-border-inner card-border-r12 flex min-h-[52px] items-center gap-3 bg-white px-3 py-2 sm:h-[52px] sm:min-h-0">
                     <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#4aaaa91a] text-[#1f6665]">
-                      ✓
+                      <FaIcon icon={faCheck} className="h-4 w-4" aria-hidden />
                     </span>
                     <span className="font-sans text-base font-semibold leading-5 text-[#1f6665]">{item}</span>
                   </div>
@@ -234,7 +236,8 @@ export function FinalCTA() {
                     type="button"
                     className="flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#1f6665] px-5 py-3 font-sans text-sm font-bold text-white transition-colors hover:bg-[#185654] active:bg-[#144848]"
                   >
-                    {form.submitLabel} <span aria-hidden>→</span>
+                    {form.submitLabel}{" "}
+                    <FaIcon icon={faArrowRight} className="inline h-3.5 w-3.5 align-[-2px]" aria-hidden />
                   </button>
                   <p className="text-center font-sans text-xs leading-4 text-[#505052]">{form.footnote}</p>
                 </div>

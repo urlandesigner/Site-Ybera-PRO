@@ -3,7 +3,9 @@
 import { useId, useState } from "react";
 
 import { Container } from "@/components/layout/Container";
+import { faArrowRight, faChevronDown } from "@/lib/fa-icons";
 import { Section } from "@/components/layout/Section";
+import { FaIcon } from "@/components/icons/FaIcon";
 
 type FaqItem = {
   question: string;
@@ -71,7 +73,7 @@ export function FAQ() {
               <h2 className="font-display text-[28px] font-semibold leading-9 text-[#1e1e1f] lg:text-[32px] lg:leading-10">
                 Ainda tem dúvidas antes de começar?
               </h2>
-              <p className="max-w-[412px] font-sans text-base leading-6 text-[#505052] lg:text-lg">
+              <p className="max-w-[412px] font-sans text-base leading-6 text-[#505052] opacity-80 lg:text-lg">
                 Veja como funciona o PRO e como você pode começar a vender mais.
               </p>
             </div>
@@ -81,7 +83,8 @@ export function FAQ() {
                 type="button"
                 className="flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#1f6665] px-5 font-sans text-sm font-bold text-white transition-colors hover:bg-[#185654] active:bg-[#144848] sm:h-auto sm:w-auto sm:py-3"
               >
-                Quero me cadastrar <span>→</span>
+                Quero me cadastrar{" "}
+                <FaIcon icon={faArrowRight} className="inline h-3.5 w-3.5 align-[-2px]" aria-hidden />
               </button>
               <p className="font-sans text-xs leading-4 text-black">
                 Seu cadastro será analisado e você será contatado em breve.
@@ -111,21 +114,14 @@ export function FAQ() {
                       </span>
                       <span className="min-w-0 flex-1">{item.question}</span>
                       <span className="flex h-5 w-5 shrink-0 items-center justify-center text-[#505052]" aria-hidden>
-                        <svg
-                          viewBox="0 0 20 20"
+                        <FaIcon
+                          icon={faChevronDown}
                           className={[
                             "h-4 w-4 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]",
                             "motion-reduce:transition-none",
                             expanded ? "rotate-180" : "rotate-0",
                           ].join(" ")}
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.75"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M5 7.5 10 12.5 15 7.5" />
-                        </svg>
+                        />
                       </span>
                     </button>
                   </h3>

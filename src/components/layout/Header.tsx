@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 
 import { Container } from "@/components/layout/Container";
+import { FaIcon } from "@/components/icons/FaIcon";
+import { faBars, faXmark } from "@/lib/fa-icons";
 import { HEADER_NAV, type HeaderAppearance } from "@/components/layout/header-config";
 
 /**
@@ -150,13 +152,9 @@ export function Header({ variant: variantProp = "auto" }: HeaderProps) {
           >
             <span className="sr-only">{mobileOpen ? "Fechar menu" : "Abrir menu"}</span>
             {mobileOpen ? (
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
-                <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
+              <FaIcon icon={faXmark} className="h-5 w-5" aria-hidden />
             ) : (
-              <svg width="22" height="14" viewBox="0 0 22 14" fill="none" aria-hidden>
-                <path d="M1 1h20M1 7h20M1 13h20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
+              <FaIcon icon={faBars} className="h-[14px] w-[22px]" aria-hidden />
             )}
           </button>
 

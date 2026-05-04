@@ -17,6 +17,9 @@
   --color-ink-inverse: 248 250 252;
   --color-border: 203 213 225;
 
+  /* Figma Colors/Alfa/secondary — hero badge fill (nó 2354:4587) */
+  --palette-alfa-secondary: rgb(5 5 5 / 10%);
+
   /* Typography */
   --font-family-display: var(--font-syne), "Segoe UI", sans-serif;
   --font-family-sans: var(--font-nunito-sans), "Segoe UI", sans-serif;

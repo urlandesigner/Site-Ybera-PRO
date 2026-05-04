@@ -15,6 +15,7 @@ import { Opportunity } from "@/components/sections/Opportunity";
 import { Products } from "@/components/sections/Products";
 import { RecurringIncome } from "@/components/sections/RecurringIncome";
 import { StoreProof } from "@/components/sections/StoreProof";
+import { Testimonials } from "@/components/sections/Testimonials";
 import { Tools } from "@/components/sections/Tools";
 
 export default function Home() {
@@ -36,6 +37,7 @@ export default function Home() {
         <Products />
         <StoreProof />
         <ExclusiveProducts />
+        <Testimonials />
         <FinalCTA />
         <FAQ />
       </main>

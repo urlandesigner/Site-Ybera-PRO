@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Nunito_Sans, Syne } from "next/font/google";
+
+import "@/lib/fontawesome-config";
 import "./globals.css";
 
 const geist = Geist({
@@ -10,7 +12,8 @@ const geist = Geist({
 const nunitoSans = Nunito_Sans({
   variable: "--font-nunito-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  /** Hero H1 (Figma): ExtraLight nos trechos em Nunito — inclui 200/300. */
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
 });
 
 const syne = Syne({
