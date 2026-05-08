@@ -78,7 +78,7 @@ function HeaderProfileSubheaderInner() {
           </nav>
 
           <div className="flex shrink-0 items-center gap-2 pl-12 sm:gap-3">
-            <GlassProCta href="#final-cta" tone="light" size="compact">
+            <GlassProCta href="#final-cta" tone="light" size="compact" showArrow={false}>
               Começar agora
             </GlassProCta>
           </div>
@@ -137,7 +137,7 @@ export function HeaderProfileSubheaderFallback() {
             })}
           </nav>
           <div className="flex shrink-0 items-center gap-2 pl-12 sm:gap-3">
-            <GlassProCta href="#final-cta" tone="light" size="compact">
+            <GlassProCta href="#final-cta" tone="light" size="compact" showArrow={false}>
               Começar agora
             </GlassProCta>
           </div>

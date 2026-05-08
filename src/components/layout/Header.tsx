@@ -192,7 +192,12 @@ export function Header({ variant: variantProp = "auto" }: HeaderProps) {
           Login
         </a>
 
-        <GlassProCta href="#final-cta" tone={a === "onDark" ? "dark" : "light"} size="compact">
+        <GlassProCta
+          href="#final-cta"
+          tone={a === "onDark" ? "dark" : "light"}
+          size="compact"
+          showArrow={false}
+        >
           Começar agora
         </GlassProCta>
       </div>
