@@ -11,8 +11,6 @@ import { HeroStatCounters } from "@/components/sections/HeroStatCounters";
 /** Fundo da hero: arte final em `public/images/Hero@2x.jpg` (sem filtros no código). */
 const imgHeroBackground = "/images/Hero@2x.jpg";
 const imgLine = "/images/Lines.svg";
-const imgEllipseGlow =
-  "https://www.figma.com/api/mcp/asset/97e718ed-c890-4d9e-bc4b-d0195e21107f";
 const imgMaleAvatar07 =
   "https://www.figma.com/api/mcp/asset/0bea5da5-6968-46bd-bc6e-1c33ebbc872e";
 const imgMaleAvatar8 =
@@ -95,14 +93,6 @@ export function Hero() {
           </div>
 
           <div className="relative w-full shrink-0 lg:w-[478px]">
-            <div className="pointer-events-none absolute -left-[75px] -top-[34px] flex h-[560.792px] w-[628.742px] items-center justify-center">
-              <div className="shrink-0 -rotate-[112.15deg]">
-                <div className="relative h-[518px] w-[394.526px]">
-                  <img src={imgEllipseGlow} alt="" className="block h-full w-full max-w-none object-contain" />
-                </div>
-              </div>
-            </div>
-
             <div
               className="relative z-[2] mx-auto w-full max-w-[440px] lg:ml-auto lg:mr-2 lg:-translate-y-4 lg:transform-gpu"
               style={{
