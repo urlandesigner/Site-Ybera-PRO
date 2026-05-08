@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
+import { useActiveProfile } from "@/lib/profile-content";
+import type { ProfileTabId } from "@/lib/profile-tabs";
 import { cn } from "@/lib/utils";
 
 const AUTO_ADVANCE_MS = 5000;
@@ -181,32 +183,109 @@ const expandedFeaturesByAudience: Record<
 };
 
 export function ControlPanel() {
-  const primaryFeatures = [
+  const profile = useActiveProfile();
+  const byProfile: Record<
+    ProfileTabId,
     {
-      title: "Veja quem está ativo e quem você pode perder.",
-      description: "Tenha visibilidade da carteira em tempo real para identificar oportunidades e riscos.",
-      image: "/images/produto1.png",
-      alt: "Painel com visão de carteira e atividade de clientes",
+      title: string;
+      support: string;
+      primaryFeatures: readonly { title: string; description: string; image: string; alt: string }[];
+      expandedAudience: ExpandedAudienceId;
+    }
+  > = {
+    distribuidor: {
+      title: "Pare de perder clientes e transforme sua carteira em receita recorrente",
+      support:
+        "Pare de depender de feeling. Use dados para agir no momento certo e aumentar a recorrencia da sua carteira.",
+      primaryFeatures: [
+        {
+          title: "Veja quem está ativo e quem você pode perder",
+          description: "Tenha visibilidade da carteira em tempo real para identificar oportunidades e riscos.",
+          image: "/images/produto1.png",
+          alt: "Painel com visão de carteira e atividade de clientes",
+        },
+        {
+          title: "Seja avisado antes do cliente parar de comprar",
+          description:
+            "Antecipe recompras, recupere pedidos perdidos e priorize contatos com maior impacto no caixa.",
+          image: "/images/produto2.png",
+          alt: "Painel com alertas e indicadores de oportunidade",
+        },
+        {
+          title: "Aumente recorrência e previsibilidade de receita",
+          description: "Transforme dados da operação em ações práticas que aceleram vendas recorrentes.",
+          image: "/images/produto3.png",
+          alt: "Painel de performance e previsibilidade de receita",
+        },
+      ],
+      expandedAudience: "distribuidores",
     },
-    {
-      title: "Seja avisado antes do cliente parar de comprar",
-      description:
-        "Antecipe recompras, recupere pedidos perdidos e priorize contatos com maior impacto no caixa.",
-      image: "/images/produto2.png",
-      alt: "Painel com alertas e indicadores de oportunidade",
+    representante: {
+      title: "Organize sua carteira e aumente suas vendas recorrentes",
+      support:
+        "Acompanhe clientes, pedidos e oportunidades de recompra para vender no momento certo e aumentar seus ganhos.",
+      primaryFeatures: [
+        {
+          title: "Saiba quais clientes estão parados",
+          description: "Carteira ordenada por impacto comercial e chance de recompra.",
+          image: "/images/produto1.png",
+          alt: "Painel comercial para representantes",
+        },
+        {
+          title: "Receba alertas de recompra",
+          description: "Ative contatos no momento ideal e reduza perdas por atraso.",
+          image: "/images/produto2.png",
+          alt: "Alertas de recompra para representantes",
+        },
+        {
+          title: "Acompanhe suas vendas e comissões",
+          description: "Performance por cliente, região e rota para ajustar rapidamente.",
+          image: "/images/produto3.png",
+          alt: "Painel de metas para representantes",
+        },
+      ],
+      expandedAudience: "representantes",
     },
-    {
-      title: "Aumente recorrência e previsibilidade de receita",
-      description: "Transforme dados da operação em ações práticas que aceleram vendas recorrentes.",
-      image: "/images/produto3.png",
-      alt: "Painel de performance e previsibilidade de receita",
+    profissional: {
+      title: "Transforme atendimentos em clientes recorrentes",
+      support:
+        "Use dados para acompanhar recompra, identificar clientes inativos e aumentar a fidelização no salão.",
+      primaryFeatures: [
+        {
+          title: "Veja quais clientes não retornaram",
+          description: "Tudo em um fluxo simples para decidir a próxima compra com segurança.",
+          image: "/images/produto1.png",
+          alt: "Painel para profissionais",
+        },
+        {
+          title: "Acompanhe produtos mais recorrentes",
+          description: "Recompra orientada para evitar urgência e compra fora do plano.",
+          image: "/images/produto2.png",
+          alt: "Alertas de reposição para profissionais",
+        },
+        {
+          title: "Fortaleça a recorrência do salão",
+          description: "Condições e benefícios organizados para compra mais inteligente.",
+          image: "/images/produto3.png",
+          alt: "Campanhas e benefícios para profissionais",
+        },
+      ],
+      expandedAudience: "profissionais",
     },
-  ] as const;
+  };
+  const content = byProfile[profile];
+  const primaryFeatures = content.primaryFeatures;
   const [activeFeatureIndex, setActiveFeatureIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [showAllFeatures, setShowAllFeatures] = useState(false);
-  const [expandedAudience, setExpandedAudience] = useState<ExpandedAudienceId>("distribuidores");
+  const [expandedAudience, setExpandedAudience] = useState<ExpandedAudienceId>(content.expandedAudience);
   const activeFeature = primaryFeatures[activeFeatureIndex];
+
+  useEffect(() => {
+    setActiveFeatureIndex(0);
+    setProgress(0);
+    setExpandedAudience(content.expandedAudience);
+  }, [content.expandedAudience, profile]);
 
   useEffect(() => {
     setProgress(0);
@@ -233,16 +312,15 @@ export function ControlPanel() {
         <div className="space-y-8 lg:space-y-10">
           <header className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,392px)] lg:items-start lg:gap-10">
             <h2 className="max-w-[620px] font-display text-[28px] font-semibold leading-9 text-white lg:text-[32px] lg:leading-10">
-              Pare de perder clientes e transforme sua carteira em receita recorrente
+              {content.title}
             </h2>
             <p className="max-w-[392px] pt-1 font-sans text-base leading-6 text-white lg:text-[17px]">
-              Pare de depender de feeling. Use dados para agir no momento certo e aumentar a recorrencia da sua
-              carteira.
+              {content.support}
             </p>
           </header>
 
-          <div className="card-border-r20 mx-auto w-full max-h-[598px] overflow-hidden bg-[#06131a] lg:w-[86.4%]">
-            <div className="card-border-r20 relative max-h-[598px] overflow-hidden">
+          <div className="card-border-r20 mx-auto w-full max-h-[498px] overflow-hidden bg-[#06131a] lg:w-[86.4%]">
+            <div className="card-border-r20 relative max-h-[498px] overflow-hidden">
               <img
                 src={activeFeature.image}
                 alt={activeFeature.alt}
@@ -311,7 +389,6 @@ export function ControlPanel() {
                   />
                 </span>
                 <p className="font-display text-2xl font-semibold leading-8 text-white">{feature.title}</p>
-                <p className="font-sans text-base leading-6 text-white">{feature.description}</p>
               </button>
             ))}
           </div>

@@ -2,15 +2,15 @@
 
 import type { KeyboardEvent } from "react";
 import { useEffect, useId, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { Container } from "@/components/layout/Container";
 import { faCheck } from "@/lib/fa-icons";
 import { Section } from "@/components/layout/Section";
 import { FaIcon } from "@/components/icons/FaIcon";
 import { GlassProCta } from "@/components/ui/GlassProCta";
+import { useActiveProfile } from "@/lib/profile-content";
 import type { ProfileTabId } from "@/lib/profile-tabs";
-import { profileTabFromSearchParam } from "@/lib/profile-tabs";
 
 type ProfileTab = ProfileTabId;
 
@@ -33,7 +33,7 @@ const formByTab: Record<
   }
 > = {
   distribuidor: {
-    heading: "Crie sua conta e comece a vender",
+    heading: "Estruture sua operação com a Ybera PRO",
     rows: [
       [
         ["Nome completo", "Seu nome"],
@@ -46,11 +46,11 @@ const formByTab: Record<
     ],
     cityLabel: "Cidade ou região de atuação",
     cityPlaceholder: "Ex: São Paulo, SP",
-    submitLabel: "Criar minha conta",
+    submitLabel: "Quero expandir minha operação",
     footnote: "Seus dados serão analisados e você será contatado para ativação.",
   },
   representante: {
-    heading: "Crie sua conta e comece a vender",
+    heading: "Estruture sua carteira com a Ybera PRO",
     rows: [
       [
         ["Nome completo", "Seu nome"],
@@ -63,11 +63,11 @@ const formByTab: Record<
     ],
     cityLabel: "Cidade ou região de atuação",
     cityPlaceholder: "Ex: São Paulo, SP",
-    submitLabel: "Criar minha conta",
+    submitLabel: "Quero aumentar minha carteira",
     footnote: "Seus dados serão analisados e você será contatado para ativação.",
   },
   profissional: {
-    heading: "Crie sua conta e comece a vender",
+    heading: "Comece a vender com a Ybera PRO",
     rows: [
       [
         ["Nome completo", "Seu nome"],
@@ -80,7 +80,7 @@ const formByTab: Record<
     ],
     cityLabel: "Cidade ou região de atuação",
     cityPlaceholder: "Ex: São Paulo, SP",
-    submitLabel: "Criar minha conta",
+    submitLabel: "Quero vender mais com recorrência",
     footnote: "Seus dados serão analisados e você será contatado para ativação.",
   },
 };
@@ -88,23 +88,67 @@ const formByTab: Record<
 const tabBtnBase =
   "relative z-10 min-h-11 min-w-0 flex-1 cursor-pointer rounded-lg border border-transparent bg-transparent px-3 py-2 text-center font-sans text-sm font-semibold transition-[color,transform,background-color] duration-200 ease-out motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f6665] focus-visible:ring-offset-2 min-[380px]:min-h-0 min-[380px]:py-[6px] active:scale-[0.98] motion-reduce:active:scale-100";
 
+const ctaContentByTab: Record<
+  ProfileTab,
+  {
+    eyebrow: string;
+    heading: string;
+    support: string;
+    bullets: string[];
+  }
+> = {
+  distribuidor: {
+    eyebrow: "Distribuidor Ybera PRO",
+    heading: "Expanda sua operação com o ecossistema Ybera PRO",
+    support:
+      "Centralize representantes, acompanhe performance da rede e fortaleça a recorrência da operação em uma única plataforma.",
+    bullets: [
+      "Sem taxa mensal. Crescimento alinhado à operação",
+      "Gestão completa da operação",
+      "Visibilidade da recorrência da operação",
+    ],
+  },
+  representante: {
+    eyebrow: "Representante Ybera PRO",
+    heading: "Transforme sua carteira em receita recorrente",
+    support:
+      "Acompanhe clientes, identifique oportunidades de recompra e aumente sua recorrência com mais previsibilidade e controle.",
+    bullets: [
+      "Sem mensalidade. Você cresce com as vendas.",
+      "Gestão inteligente da carteira de clientes",
+      "Acompanhamento de recompra e oportunidades",
+    ],
+  },
+  profissional: {
+    eyebrow: "Profissional Ybera PRO",
+    heading: "Venda mais com recorrência e menos esforço operacional",
+    support:
+      "Organize pedidos, acompanhe clientes e aumente sua recompra com uma operação simples, prática e profissional.",
+    bullets: [
+      "Sem mensalidade. Você cresce com as vendas.",
+      "Pedidos e clientes organizados em um só lugar",
+      "Mais recompra e previsibilidade no salão",
+    ],
+  },
+};
+
 export function FinalCTA() {
   const [tab, setTab] = useState<ProfileTab>("distribuidor");
   const uid = useId();
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const activeProfile = useActiveProfile();
   const form = formByTab[tab];
+  const ctaContent = ctaContentByTab[tab];
   const tabIndex = TABS.findIndex((t) => t.id === tab);
 
   useEffect(() => {
-    const fromUrl = profileTabFromSearchParam(searchParams.get("perfil"));
-    if (fromUrl) setTab(fromUrl);
-  }, [searchParams]);
+    setTab(activeProfile);
+  }, [activeProfile]);
 
   const selectTab = (id: ProfileTab) => {
     setTab(id);
-    const next = new URLSearchParams(searchParams.toString());
+    const next = new URLSearchParams(window.location.search);
     next.set("perfil", id);
     router.replace(`${pathname}?${next.toString()}#final-cta`, { scroll: false });
   };
@@ -137,21 +181,19 @@ export function FinalCTA() {
         <div className="grid items-start gap-8 lg:grid-cols-[1fr_520px] lg:gap-9">
           <div className="space-y-10 lg:space-y-12">
             <div className="space-y-4">
-              <p className="font-sans text-[11px] font-bold uppercase tracking-[1.5px] text-white">Comece hoje</p>
+              <p className="font-sans text-[11px] font-bold uppercase tracking-[1.5px] text-white">
+                {ctaContent.eyebrow}
+              </p>
               <h2 className="max-w-[756px] font-display text-[28px] font-semibold leading-[34px] text-[#c2fffe] sm:text-[34px] sm:leading-[40px] lg:text-[40px] lg:leading-[48px]">
-                Comece agora a gerar lucro recorrente com a maior comissão do mercado
+                {ctaContent.heading}
               </h2>
               <p className="max-w-[547px] font-sans text-base leading-6 text-white opacity-80 lg:text-lg">
-                Crie sua conta, acompanhe suas vendas e saque suas comissões.
+                {ctaContent.support}
               </p>
             </div>
 
             <div className="space-y-3">
-              {[
-                "Sem taxa mensal. Você cresce com as vendas",
-                "Gestão completa da carteira sem custo",
-                "Acompanhamento de recompra",
-              ].map((item) => (
+              {ctaContent.bullets.map((item) => (
                 <div key={item} className="card-border-shell card-border-r12 w-full lg:w-fit">
                   <div className="card-border-inner card-border-r12 flex min-h-[52px] items-center gap-3 bg-white px-3 py-2 sm:h-[52px] sm:min-h-0">
                     <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#4aaaa91a] text-[#1f6665]">

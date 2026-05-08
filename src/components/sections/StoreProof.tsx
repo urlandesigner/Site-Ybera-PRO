@@ -25,10 +25,10 @@ const LOGO_ALTS = [
 
 /** Mesmas dimensões da grid estática anterior (sem distorcer com caixa única). */
 const LOGO_SLIDE_DIMS = [
-  { width: "197px", height: "71px" },
-  { width: "123px", height: "64px" },
-  { width: "108px", height: "108px" },
-  { width: "136px", height: "88px" },
+  { width: "296px", height: "107px" },
+  { width: "185px", height: "96px" },
+  { width: "162px", height: "162px" },
+  { width: "204px", height: "132px" },
 ] as const;
 
 export function StoreProof() {

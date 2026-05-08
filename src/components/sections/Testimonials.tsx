@@ -1,46 +1,105 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Section } from "@/components/layout/Section";
+import { useActiveProfile } from "@/lib/profile-content";
+import type { ProfileTabId } from "@/lib/profile-tabs";
 import { cn } from "@/lib/utils";
 
 /** Frame Figma “Testimonials” (1512×800): tipografia e espaçamentos alinhados ao node 2385:3357. */
-const testimonials = [
-  {
-    image: "/images/feedback01.jpg",
-    name: "Joana Bascelos",
-    role: "Distribuidor PRO, Região Sudeste",
-    quote:
-      "O PRO organizou minha carteira e a recompra virou previsível. Hoje sei exatamente quem precisa de atenção e onde está meu lucro.",
-  },
-  {
-    image: "/images/feedback02.jpg",
-    name: "Fernando Hintz",
-    role: "Representante - MG",
-    quote:
-      "O PRO organizou minha carteira e a recompra virou previsível. Hoje sei exatamente quem precisa de atenção e onde está meu lucro.",
-  },
-  {
-    image: "/images/feedback01.jpg",
-    name: "Mariana Silva",
-    role: "Cabeleireira, Belo Horizonte",
-    quote:
-      "Consigo comprar com margem melhor e acompanhar tudo pelo app. Menos improviso e mais tempo com minhas clientes.",
-  },
-  {
-    image: "/images/feedback02.jpg",
-    name: "Fred Benevides",
-    role: "Salão parceiro, Curitiba",
-    quote:
-      "Transparência nas comissões e suporte do distribuidor integrado ao PRO. Finalmente uma operação que escala com a gente.",
-  },
-] as const;
+const testimonialsByProfile: Record<
+  ProfileTabId,
+  readonly { image: string; name: string; role: string; quote: string }[]
+> = {
+  distribuidor: [
+    {
+      image: "/images/feedback01.jpg",
+      name: "Joana Bascelos",
+      role: "Distribuidora PRO, Região Sudeste",
+      quote:
+        "O PRO organizou minha carteira e a recompra virou previsível. Hoje sei exatamente quem precisa de atenção e onde está meu lucro.",
+    },
+    {
+      image: "/images/feedback02.jpg",
+      name: "Fernando Hintz",
+      role: "Distribuidor PRO, MG",
+      quote:
+        "O PRO organizou minha carteira e a recompra virou previsível. Hoje sei exatamente quem precisa de atenção e onde está meu lucro.",
+    },
+  ],
+  representante: [
+    {
+      image: "/images/feedback01.jpg",
+      name: "Marina Costa",
+      role: "Representante PRO, Campinas",
+      quote:
+        "Com a carteira priorizada no PRO, eu consigo visitar melhor, recuperar clientes antes da queda e bater meta com mais constância.",
+    },
+    {
+      image: "/images/feedback02.jpg",
+      name: "Lucas Almeida",
+      role: "Representante PRO, Goiânia",
+      quote:
+        "Hoje eu começo o dia sabendo quem abordar e qual mix oferecer. Minha taxa de recompra subiu sem aumentar a correria.",
+    },
+    {
+      image: "/images/feedback01.jpg",
+      name: "Renata Moura",
+      role: "Representante PRO, Belo Horizonte",
+      quote:
+        "Com os alertas de recompra, eu recupero clientes antes da queda no faturamento e mantenho minha carteira muito mais ativa.",
+    },
+    {
+      image: "/images/feedback02.jpg",
+      name: "Thiago Ramos",
+      role: "Representante PRO, Ribeirão Preto",
+      quote:
+        "A visão de comissões e oportunidades no PRO me ajudou a organizar a rotina e aumentar vendas recorrentes sem depender de planilha.",
+    },
+  ],
+  profissional: [
+    {
+      image: "/images/feedback01.jpg",
+      name: "Mariana Silva",
+      role: "Profissional PRO, Belo Horizonte",
+      quote:
+        "Consigo comprar com margem melhor e acompanhar tudo pelo app. Menos improviso e mais tempo com minhas clientes.",
+    },
+    {
+      image: "/images/feedback02.jpg",
+      name: "Clara Teles",
+      role: "Profissional PRO, Curitiba",
+      quote:
+        "Com histórico e lembretes de recompra no PRO, o salão não fica sem produto e minha rotina ficou muito mais previsível.",
+    },
+    {
+      image: "/images/feedback01.jpg",
+      name: "Patricia Nunes",
+      role: "Profissional PRO, São Paulo",
+      quote:
+        "Consegui organizar melhor minha recompra e parei de perder atendimento por falta de produto no salão.",
+    },
+    {
+      image: "/images/feedback02.jpg",
+      name: "Aline Souza",
+      role: "Profissional PRO, Recife",
+      quote:
+        "Hoje acompanho pedidos e campanhas em um só lugar. Minha rotina ficou mais leve e meu ticket médio aumentou.",
+    },
+  ],
+};
 
 export function Testimonials() {
+  const profile = useActiveProfile();
+  const testimonials = testimonialsByProfile[profile];
   const [index, setIndex] = useState(0);
   const total = testimonials.length;
+
+  useEffect(() => {
+    setIndex(0);
+  }, [profile]);
 
   const go = useCallback(
     (delta: number) => {

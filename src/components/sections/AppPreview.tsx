@@ -1,9 +1,9 @@
+"use client";
+
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
-
-/** Assets: frame Multiplataforma (Figma 2315:2954, Dev Mode). */
-const imgScreen = "/images/produto1.png";
-const imgPhone = "https://www.figma.com/api/mcp/asset/64557df8-e589-4923-9c8e-cac9164efc20";
+import { useActiveProfile } from "@/lib/profile-content";
+import type { ProfileTabId } from "@/lib/profile-tabs";
 
 /**
  * Frame 22 (2315:2954) no Figma: altura total **487px** (padding 100 + área útil 287 + padding 100).
@@ -19,10 +19,35 @@ const MAC_LEFT = 0;
 const MAC_TOP = 0;
 const PHONE_LEFT = 472;
 const PHONE_TOP = 93;
+const SHARED_DESKTOP_IMAGE = "/images/produto1.png";
+const SHARED_MOBILE_IMAGE = "https://www.figma.com/api/mcp/asset/64557df8-e589-4923-9c8e-cac9164efc20";
 
 const pct = (n: number, d: number) => `${(n / d) * 100}%`;
 
 export function AppPreview() {
+  const profile = useActiveProfile();
+  const contentByProfile: Record<
+    ProfileTabId,
+    { title: string; support: string }
+  > = {
+    distribuidor: {
+      title: "Acompanhe sua operação de qualquer lugar",
+      support:
+        "Gerencie representantes, profissionais e resultados da sua rede pelo desktop enquanto acompanha indicadores importantes também no aplicativo.",
+    },
+    representante: {
+      title: "Venda e acompanhe sua carteira em tempo real",
+      support:
+        "Tenha acesso rápido a pedidos, clientes, comissões e oportunidades de recompra direto pelo app ou desktop.",
+    },
+    profissional: {
+      title: "Organize pedidos e acompanhe seus ganhos com praticidade",
+      support:
+        "Use a plataforma para acompanhar vendas, pedidos e recorrência da sua operação de onde estiver.",
+    },
+  };
+  const content = contentByProfile[profile];
+
   return (
     <Section
       id="app-preview"
@@ -46,14 +71,10 @@ export function AppPreview() {
                 Multiplataforma
               </p>
               <h2 className="font-display text-xl font-semibold leading-7 text-[#1e1e1f] lg:text-2xl lg:leading-8">
-                Acompanhe suas vendas e seus ganhos de qualquer lugar
+                {content.title}
               </h2>
               <p className="font-sans text-base leading-6 text-[#505052] opacity-80 lg:text-lg">
-                Distribuidores gerenciam a operação pelo web enquanto representantes e profissionais
-                atuam pelo app no dia a dia.
-              </p>
-              <p className="font-sans text-base leading-6 text-[#505052] opacity-80 lg:text-lg">
-                Acompanhe suas vendas e solicite seus ganhos direto pelo sistema, de onde estiver.
+                {content.support}
               </p>
             </header>
 
@@ -82,7 +103,7 @@ export function AppPreview() {
             translateY = altura do bloco − altura da área (cqh), para o topo alinhar à área útil
             e o excesso ir só para baixo (sob Metrics), sem invadir a seção anterior.
           */}
-          <div className="relative flex min-h-0 w-full min-w-0 items-end justify-end overflow-visible [container-type:size] [container-name:app-mock] lg:h-full lg:min-h-0">
+          <div className="relative flex min-h-0 w-full min-w-0 items-end justify-end overflow-visible [container-type:size] [container-name:app-mock] lg:h-full lg:min-h-0 lg:pt-6">
             <div
               className="relative mx-auto w-full max-w-[660px] max-lg:mx-auto max-lg:max-w-[min(660px,calc(100vw-48px))] lg:mx-0 lg:ml-auto lg:mr-0 lg:[transform:translateY(max(0px,calc(min(100cqw,660px)*485/660-100cqh)))]"
               style={{ aspectRatio: `${PREVIEW_W} / ${PREVIEW_H}` }}
@@ -98,14 +119,14 @@ export function AppPreview() {
                   }}
                 >
                   <img
-                    src={imgScreen}
+                    src={SHARED_DESKTOP_IMAGE}
                     alt="Preview da plataforma web"
                     className="absolute inset-0 size-full max-w-none object-contain"
                     decoding="async"
                   />
                 </div>
                 <img
-                  src={imgPhone}
+                  src={SHARED_MOBILE_IMAGE}
                   alt="Preview do app mobile"
                   width={PHONE_W}
                   height={PHONE_H}

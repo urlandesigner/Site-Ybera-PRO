@@ -2,6 +2,10 @@ import { Suspense } from "react";
 
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import {
+  HeaderProfileSubheader,
+  HeaderProfileSubheaderFallback,
+} from "@/components/layout/HeaderProfileSubheader";
 import { AppPreview } from "@/components/sections/AppPreview";
 import { AudienceTabs } from "@/components/sections/AudienceTabs";
 import { Benefits } from "@/components/sections/Benefits";
@@ -26,16 +30,31 @@ export default function Home() {
         <Hero />
         <EcosystemStrip />
         <AudienceTabs />
-        <ControlPanel />
-        <Opportunity />
-        <Benefits />
-        <Tools />
+        <Suspense fallback={null}>
+          <Benefits />
+        </Suspense>
+        <Suspense fallback={<HeaderProfileSubheaderFallback />}>
+          <HeaderProfileSubheader />
+        </Suspense>
+        <Suspense fallback={null}>
+          <ControlPanel />
+        </Suspense>
+        <Suspense fallback={null}>
+          <Opportunity />
+        </Suspense>
+        <Suspense fallback={null}>
+          <Tools />
+        </Suspense>
         <Ecosystem />
-        <AppPreview />
+        <Suspense fallback={null}>
+          <AppPreview />
+        </Suspense>
         <Metrics />
         <Products />
         <StoreProof />
-        <Testimonials />
+        <Suspense fallback={null}>
+          <Testimonials />
+        </Suspense>
         <Suspense fallback={null}>
           <FinalCTA />
         </Suspense>

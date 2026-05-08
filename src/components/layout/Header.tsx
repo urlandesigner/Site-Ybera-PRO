@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Container } from "@/components/layout/Container";
 import { FaIcon } from "@/components/icons/FaIcon";
@@ -14,10 +14,6 @@ import {
   HEADER_NAV_LINK_ON_LIGHT,
   type HeaderAppearance,
 } from "@/components/layout/header-config";
-import {
-  HeaderProfileSubheader,
-  HeaderProfileSubheaderFallback,
-} from "@/components/layout/HeaderProfileSubheader";
 import { GlassProCta } from "@/components/ui/GlassProCta";
 import { cn } from "@/lib/utils";
 
@@ -243,38 +239,11 @@ export function Header({ variant: variantProp = "auto" }: HeaderProps) {
         a === "onLight" ? "bg-transparent shadow-none" : shell[a],
       )}
     >
-      <div
-        className={cn(
-          "relative w-full transition-[min-height] duration-300 ease-out motion-reduce:transition-none",
-          a === "onLight" ? "min-h-[5.25rem]" : "min-h-16",
-        )}
-      >
-        <div
-          className={cn(
-            "w-full transition-[opacity,transform,filter] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none motion-reduce:transform-none",
-            a === "onDark"
-              ? "pointer-events-auto relative z-20 translate-y-0 opacity-100"
-              : "pointer-events-none absolute inset-x-0 top-0 z-10 -translate-y-2 opacity-0 blur-[1px] motion-reduce:translate-y-0 motion-reduce:blur-none",
-          )}
-          aria-hidden={a !== "onDark"}
-        >
-          {mainRow}
-        </div>
-
-        <div
-          className={cn(
-            "w-full transition-[opacity,transform,filter] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none motion-reduce:transform-none",
-            a === "onLight"
-              ? "pointer-events-auto relative z-20 translate-y-0 opacity-100"
-              : "pointer-events-none absolute inset-x-0 top-0 z-10 translate-y-2 opacity-0 blur-[1px] motion-reduce:translate-y-0 motion-reduce:blur-none",
-          )}
-          aria-hidden={a !== "onLight"}
-        >
-          <Suspense fallback={<HeaderProfileSubheaderFallback />}>
-            <HeaderProfileSubheader />
-          </Suspense>
-        </div>
-      </div>
+      {a === "onLight" ? (
+        <div className={cn("pointer-events-auto w-full", shellLightFirstRow)}>{mainRow}</div>
+      ) : (
+        mainRow
+      )}
     </header>
   );
 }

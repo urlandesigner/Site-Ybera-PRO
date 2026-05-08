@@ -6,33 +6,98 @@ import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { FaIcon } from "@/components/icons/FaIcon";
 import { faBriefcase, faUser, faUsers } from "@/lib/fa-icons";
+import { useActiveProfile } from "@/lib/profile-content";
+import type { ProfileTabId } from "@/lib/profile-tabs";
 import { PRODUCT_DASHBOARD_PREVIEW_FILTER } from "@/lib/product-dashboard-preview-shadow";
 
 export function Benefits() {
-  const cards = [
-    {
-      title: "Distribuidores",
-      description: "Controle total da sua operação e previsibilidade de receita",
-      support: "Você enxerga quem compra, quando recompra e quanto pode faturar",
-      icon: faUser,
+  const profile = useActiveProfile();
+  const byProfile: Record<
+    ProfileTabId,
+    { heading: string; support: string; cards: readonly { title: string; description: string; support: string; icon: typeof faUser }[] }
+  > = {
+    distribuidor: {
+      heading: "Pare de perder clientes e transforme sua carteira em receita recorrente",
+      support:
+        "Pare de depender de feeling. Use dados para agir no momento certo e aumentar a recorrência da sua carteira.",
+      cards: [
+        {
+          title: "Distribuidores",
+          description: "Controle total da operação e previsibilidade de receita.",
+          support: "Acompanhe representantes, recorrência e crescimento da rede em tempo real.",
+          icon: faUser,
+        },
+        {
+          title: "Representantes",
+          description: "Mais vendas com menos esforço operacional.",
+          support: "Organize pedidos, acompanhe recompra e mantenha sua carteira ativa.",
+          icon: faBriefcase,
+        },
+        {
+          title: "Profissionais",
+          description: "Organize pedidos, acompanhe recompra e mantenha sua carteira ativa.",
+          support: "Transforme atendimentos em clientes recorrentes e aumente o ticket médio.",
+          icon: faUsers,
+        },
+      ],
     },
-    {
-      title: "Profissionais",
-      description: "Mais lucro sem depender de novas vendas o tempo todo",
-      support: "Seus clientes voltam com mais frequência e aumentam seu ticket médio",
-      icon: faUsers,
+    representante: {
+      heading: "Aumente seus ganhos com uma carteira mais recorrente",
+      support:
+        "Ganhe mais mantendo clientes ativos, acompanhando recompra e ampliando oportunidades de venda.",
+      cards: [
+        {
+          title: "Comissão recorrente",
+          description: "Comissões mais previsíveis ao manter sua base ativa.",
+          support: "Venda com consistência e reduza oscilações ao longo do mês.",
+          icon: faUser,
+        },
+        {
+          title: "Mais clientes ativos",
+          description: "Acompanhe a carteira e evite perder clientes por inatividade.",
+          support: "Atue no momento certo para manter relacionamento e recompra.",
+          icon: faBriefcase,
+        },
+        {
+          title: "Oportunidades de recompra",
+          description: "Identifique quem está na janela ideal de nova compra.",
+          support: "Priorize contatos com maior chance de conversão e ganho.",
+          icon: faUsers,
+        },
+      ],
     },
-    {
-      title: "Representantes",
-      description: "Mais vendas sem aumentar esforço",
-      support: "Sua rede ativa mais rápido, recompra melhor e performa com consistência",
-      icon: faBriefcase,
+    profissional: {
+      heading: "Transforme recorrência em crescimento para o seu salão",
+      support:
+        "Fortaleça a fidelização dos clientes e aumente o valor percebido dos seus atendimentos.",
+      cards: [
+        {
+          title: "Mais retorno de clientes",
+          description: "Estimule a recompra com acompanhamento contínuo da base.",
+          support: "Mantenha frequência de retorno e reduza períodos sem atendimento.",
+          icon: faUser,
+        },
+        {
+          title: "Ticket médio maior",
+          description: "Aumente o valor por cliente com rotina de recompra estruturada.",
+          support: "Combine fidelização com mix inteligente para elevar receita por atendimento.",
+          icon: faBriefcase,
+        },
+        {
+          title: "Fidelização no salão",
+          description: "Construa uma carteira recorrente com relacionamento mais forte.",
+          support: "Mais previsibilidade de agenda e crescimento sustentável do salão.",
+          icon: faUsers,
+        },
+      ],
     },
-  ] as const;
+  };
+  const content = byProfile[profile];
+  const cards = content.cards;
   const previewDistribuidor = "/images/produto1.png";
   const previewProfissional = "/images/produto2.png";
   const previewRepresentante = "/images/produto3.png";
-  const previewByCard = [previewDistribuidor, previewProfissional, previewRepresentante] as const;
+  const previewByCard = [previewDistribuidor, previewRepresentante, previewProfissional] as const;
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
@@ -64,11 +129,10 @@ export function Benefits() {
           <header className="max-w-[560px] space-y-3">
             <p className="font-sans text-xs font-bold uppercase tracking-[1.5px] text-[#1f6665]">Produto</p>
             <h2 className="font-display text-[28px] font-semibold leading-9 text-[#1e1e1f] lg:text-[32px] lg:leading-10">
-              Pare de perder clientes e transforme sua carteira em receita previsível
+              {content.heading}
             </h2>
             <p className="font-sans text-base leading-6 text-[#505052] opacity-80 lg:text-lg">
-              O PRO organiza sua operação, ativa recompra automaticamente e te dá controle total sobre
-              suas vendas.
+              {content.support}
             </p>
           </header>
 

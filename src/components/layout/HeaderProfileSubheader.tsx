@@ -1,13 +1,13 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 
 import { Container } from "@/components/layout/Container";
 import { HEADER_PROFILE_NAV_LINK_ON_LIGHT } from "@/components/layout/header-config";
-import { GlassProCta } from "@/components/ui/GlassProCta";
+import { useActiveProfile } from "@/lib/profile-content";
 import { cn } from "@/lib/utils";
-import { PROFILE_TAB_IDS, profileTabFromSearchParam, type ProfileTabId } from "@/lib/profile-tabs";
+import { PROFILE_TAB_IDS, type ProfileTabId } from "@/lib/profile-tabs";
 
 const LABELS: Record<ProfileTabId, string> = {
   distribuidor: "Distribuidor",
@@ -16,46 +16,39 @@ const LABELS: Record<ProfileTabId, string> = {
 };
 
 /** Mesmo tipo/hover da primeira faixa; aba ativa só reforça cor (como destaque de seção). */
-const profileLinkActive = "text-[#155050]";
+const profileLinkBase = "rounded-full px-3 py-1.5";
+const profileLinkActive =
+  "border-0 bg-[#2f7f7e] text-white shadow-none outline-none ring-0 focus-visible:outline-none focus-visible:ring-0 hover:text-white transition-none";
 
 const barVariants = {
   barrav1:
-    "relative mx-auto w-full max-w-[1040px] rounded-[16px] border-[0.5px] border-solid border-[rgba(226,228,232,0.95)] bg-[rgba(170,255,216,0.126)] pl-3 shadow-[0_2px_10px_rgba(0,0,0,0.045)] backdrop-blur-[16px] backdrop-saturate-[1.40] transition-all hover:bg-[rgba(170,255,216,0.198)] hover:shadow-[0_2px_12px_rgba(0,0,0,0.055)] hover:backdrop-blur-[24px]",
+    "relative mx-auto w-fit max-w-[calc(100vw-2rem)] rounded-full border-[0.5px] border-solid border-[rgba(226,228,232,0.95)] bg-[rgba(170,255,216,0.126)] p-2 shadow-[0_2px_10px_rgba(0,0,0,0.045)] backdrop-blur-[16px] backdrop-saturate-[1.40] transition-all hover:bg-[rgba(170,255,216,0.198)] hover:shadow-[0_2px_12px_rgba(0,0,0,0.055)] hover:backdrop-blur-[24px]",
   barrav2:
-    "relative mx-auto w-full max-w-[1040px] rounded-[16px] border-[0.5px] border-solid border-[rgba(226,228,232,0.95)] bg-[rgba(255,255,255,0.828)] pl-3 shadow-[0_2px_10px_rgba(0,0,0,0.045)] backdrop-blur-[16px] backdrop-saturate-[1.40] transition-all hover:bg-[rgba(255,255,255,0.864)] hover:shadow-[0_2px_12px_rgba(0,0,0,0.055)] hover:backdrop-blur-[24px]",
+    "relative mx-auto w-fit max-w-[calc(100vw-2rem)] rounded-full border-[0.5px] border-solid border-[rgba(186,218,214,0.95)] bg-[rgba(224,236,234,0.9)] p-2 shadow-[0_2px_10px_rgba(0,0,0,0.045)] backdrop-blur-[16px] backdrop-saturate-[1.40] transition-all hover:bg-[rgba(214,228,226,0.93)] hover:shadow-[0_2px_12px_rgba(0,0,0,0.055)] hover:backdrop-blur-[24px]",
 } as const;
 
 const activeBarVariant = barVariants.barrav2;
+const APPEAR_AFTER_SECTION_ID = "benefits";
+const REVEAL_OFFSET_PX = 96;
 
-/** Espelha `mainRow` dentro do Container: `h-16`, gaps e cluster direito iguais ao header branco. */
+/** Conteúdo compacto para o padding externo de 8px ficar visível em todos os lados. */
 const dockInner =
-  "relative z-10 flex h-16 w-full items-center justify-between gap-3 px-[10px] sm:gap-6";
+  "relative z-10 flex w-fit items-center justify-center";
 
-function HeaderProfileSubheaderInner() {
-  const searchParams = useSearchParams();
-  const resolved = profileTabFromSearchParam(searchParams.get("perfil")) ?? "distribuidor";
-
+function ProfileBarContent({
+  resolved,
+  onSelectProfile,
+}: {
+  resolved: ProfileTabId;
+  onSelectProfile?: (id: ProfileTabId) => void;
+}) {
   return (
-    <Container className="pointer-events-auto mt-3">
+    <Container className="pointer-events-auto">
       <div className={activeBarVariant}>
-        <div className="pointer-events-none absolute inset-0 rounded-[16px] bg-[linear-gradient(135deg,rgba(255,255,255,0.20),rgba(255,255,255,0.02))]" />
+        <div className="pointer-events-none absolute inset-0 rounded-full bg-[linear-gradient(135deg,rgba(255,255,255,0.20),rgba(255,255,255,0.02))]" />
         <div className={dockInner}>
-          <a
-            href="#hero"
-            className="inline-flex shrink-0 cursor-pointer items-center pr-12 opacity-100 transition-opacity hover:opacity-90"
-            aria-label="Ybera Club PRO"
-          >
-            <img
-              src="/images/logo-dark.svg"
-              alt="Ybera Club PRO"
-              width={135}
-              height={30}
-              className="h-[30px] w-auto"
-            />
-          </a>
-
           <nav
-            className="flex shrink-0 items-center justify-center gap-[22px]"
+            className="flex shrink-0 items-center justify-center gap-2"
             aria-label="Escolha seu perfil"
           >
             {PROFILE_TAB_IDS.map((id) => {
@@ -63,11 +56,13 @@ function HeaderProfileSubheaderInner() {
               return (
                 <Link
                   key={id}
-                  href={`/?perfil=${id}#final-cta`}
+                  href={`/?perfil=${id}`}
                   scroll={false}
+                  onClick={() => onSelectProfile?.(id)}
                   className={cn(
                     HEADER_PROFILE_NAV_LINK_ON_LIGHT,
-                    "whitespace-nowrap",
+                    "whitespace-nowrap transition-none",
+                    profileLinkBase,
                     active && profileLinkActive,
                   )}
                 >
@@ -77,72 +72,64 @@ function HeaderProfileSubheaderInner() {
             })}
           </nav>
 
-          <div className="flex shrink-0 items-center gap-2 pl-12 sm:gap-3">
-            <GlassProCta href="#final-cta" tone="light" size="compact" showArrow={false}>
-              Começar agora
-            </GlassProCta>
-          </div>
         </div>
       </div>
     </Container>
   );
 }
 
-/** Segunda faixa do header (logo + perfis + CTA), só em `onLight`. */
 export function HeaderProfileSubheader() {
-  return <HeaderProfileSubheaderInner />;
+  const resolved = useActiveProfile();
+  const [pendingProfile, setPendingProfile] = useState<ProfileTabId | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const selectedProfile = pendingProfile ?? resolved;
+
+  useEffect(() => {
+    setPendingProfile((current) => (current === resolved ? null : current));
+  }, [resolved]);
+
+  useEffect(() => {
+    const updateVisibility = () => {
+      const section = document.getElementById(APPEAR_AFTER_SECTION_ID);
+      if (!section) {
+        setIsVisible(false);
+        return;
+      }
+      const rect = section.getBoundingClientRect();
+      setIsVisible(rect.bottom <= REVEAL_OFFSET_PX);
+    };
+
+    updateVisibility();
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    window.addEventListener("resize", updateVisibility);
+
+    return () => {
+      window.removeEventListener("scroll", updateVisibility);
+      window.removeEventListener("resize", updateVisibility);
+    };
+  }, []);
+
+  return (
+    <div
+      className={cn(
+        "fixed left-0 right-0 z-40 top-[calc(env(safe-area-inset-top,0px)+4rem+0.75rem)] transition-[opacity,transform] duration-300 ease-out",
+        isVisible ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none -translate-y-1 opacity-0",
+      )}
+      aria-hidden={!isVisible}
+    >
+      <ProfileBarContent resolved={selectedProfile} onSelectProfile={setPendingProfile} />
+    </div>
+  );
 }
 
 /** Fallback sem `useSearchParams` (Suspense). */
 export function HeaderProfileSubheaderFallback() {
-  const resolved: ProfileTabId = "distribuidor";
   return (
-    <Container className="pointer-events-auto mt-3">
-      <div className={activeBarVariant}>
-        <div className="pointer-events-none absolute inset-0 rounded-[16px] bg-[linear-gradient(135deg,rgba(255,255,255,0.20),rgba(255,255,255,0.02))]" />
-        <div className={dockInner}>
-          <a
-            href="#hero"
-            className="inline-flex shrink-0 cursor-pointer items-center pr-12 opacity-100 transition-opacity hover:opacity-90"
-            aria-label="Ybera Club PRO"
-          >
-            <img
-              src="/images/logo-dark.svg"
-              alt="Ybera Club PRO"
-              width={135}
-              height={30}
-              className="h-[30px] w-auto"
-            />
-          </a>
-          <nav
-            className="flex shrink-0 items-center justify-center gap-[22px]"
-            aria-label="Escolha seu perfil"
-          >
-            {PROFILE_TAB_IDS.map((id) => {
-              const active = resolved === id;
-              return (
-                <Link
-                  key={id}
-                  href={`/?perfil=${id}#final-cta`}
-                  scroll={false}
-                  className={cn(
-                    HEADER_PROFILE_NAV_LINK_ON_LIGHT,
-                    "whitespace-nowrap",
-                    active && profileLinkActive,
-                  )}
-                >
-                  {LABELS[id]}
-                </Link>
-              );
-            })}
-          </nav>
-          <div className="flex shrink-0 items-center gap-2 pl-12 sm:gap-3">
-            <GlassProCta href="#final-cta" tone="light" size="compact" showArrow={false}>
-              Começar agora
-            </GlassProCta>
-          </div>
-        </div>
-      </div>
-    </Container>
+    <div
+      className="pointer-events-none fixed left-0 right-0 z-40 top-[calc(env(safe-area-inset-top,0px)+4rem+0.75rem)] -translate-y-1 opacity-0"
+      aria-hidden
+    >
+      <ProfileBarContent resolved="distribuidor" />
+    </div>
   );
 }
