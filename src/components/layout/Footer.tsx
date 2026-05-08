@@ -8,11 +8,7 @@ export function Footer() {
       <Container>
         <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1.3fr] lg:gap-16">
           <div className="w-full space-y-5 lg:max-w-[360px]">
-            <img
-              src="https://www.figma.com/api/mcp/asset/c6e6e697-57d6-406c-9391-343d0abea668"
-              alt="Ybera PRO"
-              className="h-7 w-[239px]"
-            />
+            <img src="/images/logo-light.svg" alt="Ybera PRO" className="h-7 w-[239px]" />
             <p className="font-sans text-sm leading-[18px]">
               Plataforma para ativar sua carteira, aumentar a recompra e gerar vendas recorrentes com
               previsibilidade.

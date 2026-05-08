@@ -10,8 +10,7 @@ import { HeroStatCounters } from "@/components/sections/HeroStatCounters";
 
 /** Fundo da hero: arte final em `public/images/Hero@2x.jpg` (sem filtros no código). */
 const imgHeroBackground = "/images/Hero@2x.jpg";
-const imgLine =
-  "https://www.figma.com/api/mcp/asset/615f537d-3a8e-4a09-bff1-4ebed208f357";
+const imgLine = "/images/Lines.svg";
 const imgEllipseGlow =
   "https://www.figma.com/api/mcp/asset/97e718ed-c890-4d9e-bc4b-d0195e21107f";
 const imgMaleAvatar07 =

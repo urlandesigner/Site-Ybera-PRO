@@ -3,14 +3,10 @@ import { Section } from "@/components/layout/Section";
 import { CarouselInfinite } from "@/components/ui/CarouselInfinite";
 
 const LOGO_SRC = {
-  yberaParis:
-    "https://www.figma.com/api/mcp/asset/d514c7b4-34e6-46f7-8796-89c5917d7cbe",
-  fashionGold:
-    "https://www.figma.com/api/mcp/asset/f0fa6eaf-6fb0-485a-a62b-f5f4941cc28d",
-  terraCoco:
-    "https://www.figma.com/api/mcp/asset/ab88b87d-2774-4f72-b5fd-83b703affe01",
-  blackDiva:
-    "https://www.figma.com/api/mcp/asset/55d35d58-1a16-4590-84cd-f6bd0ab19611",
+  yberaParis: "/images/logo-yberaparis.svg",
+  fashionGold: "/images/logo-fashiongold.svg",
+  terraCoco: "/images/logo-terracoco.svg",
+  blackDiva: "/images/logo-blackdiva.svg",
 } as const;
 
 const LOGO_IMAGES = [
