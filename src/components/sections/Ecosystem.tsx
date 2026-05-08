@@ -14,7 +14,7 @@ export function Ecosystem() {
   return (
     <Section
       id="ecosystem"
-      className="relative z-[1] bg-[#f4f7f7] py-14 md:py-20 lg:py-[100px]"
+      className="relative z-[1] bg-white py-14 md:py-20 lg:py-[100px]"
     >
       <Container>
         <div className="space-y-8 lg:space-y-9">

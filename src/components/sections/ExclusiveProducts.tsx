@@ -17,7 +17,7 @@ const gallery = [
 
 export function ExclusiveProducts() {
   return (
-    <Section id="exclusive-products" className="bg-white py-14 md:py-20 lg:py-[100px]">
+    <Section id="exclusive-products" className="bg-white pb-7 pt-14 md:pb-10 md:pt-20 lg:pb-[50px] lg:pt-[100px]">
       <Container>
         <div className="flex flex-col gap-9 lg:gap-[36px]">
           <header className="max-w-[560px] space-y-3">

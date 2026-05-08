@@ -74,8 +74,14 @@
 }
 
 html {
-  /* Header fixo (~64px) + safe-area: âncoras não ficam coladas sob a barra */
-  scroll-padding-top: calc(4.5rem + env(safe-area-inset-top, 0px));
+  /* Header fixo (~4rem) + 12px + segunda faixa (~3rem) + safe-area */
+  scroll-padding-top: calc(7rem + 0.75rem + env(safe-area-inset-top, 0px));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 html,
@@ -156,6 +162,54 @@ body {
 
 .card-border-inner.card-border-r20 {
   border-radius: 19px;
+}
+
+/**
+ * Vidro (snippet) — `.glass-card` e barra de perfil `.header-profile-bar`.
+ */
+.glass-card,
+.header-profile-bar {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.17);
+  backdrop-filter: blur(14px) saturate(1.03);
+  -webkit-backdrop-filter: blur(14px) saturate(1.03);
+  border: 0 solid rgba(255, 255, 255, 0.35);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.204);
+  transition:
+    background 0.2s ease,
+    backdrop-filter 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.glass-card::before,
+.header-profile-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.02)
+  );
+}
+
+.glass-card:hover,
+.header-profile-bar:hover {
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(24px) saturate(1.03);
+  -webkit-backdrop-filter: blur(24px) saturate(1.03);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.218);
+}
+
+.header-profile-bar {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 :root {

@@ -1,25 +1,24 @@
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 
-/** Assets — frame Multiplataforma (Figma 2315:2954, Dev Mode). */
-const imgScreen = "https://www.figma.com/api/mcp/asset/f635a010-dbbc-4fd5-a538-cd21657be941";
-const imgPhone = "https://www.figma.com/api/mcp/asset/9fa21c5c-c158-4559-ae3c-ba8145473f54";
-const imgEllipse = "https://www.figma.com/api/mcp/asset/d78dffb8-24d7-411d-a0fd-e6e32cfe081a";
+/** Assets: frame Multiplataforma (Figma 2315:2954, Dev Mode). */
+const imgScreen = "/images/produto1.png";
+const imgPhone = "https://www.figma.com/api/mcp/asset/64557df8-e589-4923-9c8e-cac9164efc20";
 
 /**
  * Frame 22 (2315:2954) no Figma: altura total **487px** (padding 100 + área útil 287 + padding 100).
  * Os mocks ultrapassam a base do frame; a seção Metrics cobre a parte inferior (z-index + fundo).
  */
-const PREVIEW_W = 694;
-const PREVIEW_H = 582;
-const MAC_W = 513;
-const MAC_H = 310;
-const PHONE_W = 279;
-const PHONE_H = 582;
+const PREVIEW_W = 660;
+const PREVIEW_H = 485;
+const MAC_W = 571;
+const MAC_H = 408;
+const PHONE_W = 188;
+const PHONE_H = 392;
 const MAC_LEFT = 0;
-const MAC_TOP = 152.5;
-const PHONE_LEFT = 415;
-const PHONE_TOP = 0;
+const MAC_TOP = 0;
+const PHONE_LEFT = 472;
+const PHONE_TOP = 93;
 
 const pct = (n: number, d: number) => `${(n / d) * 100}%`;
 
@@ -29,27 +28,12 @@ export function AppPreview() {
       id="app-preview"
       spacing="none"
       className={[
-        /* `hidden` + `visible` em eixos diferentes vira `auto` no outro eixo — scroll indesejado. `clip` não. */
-        "relative z-0 overflow-x-clip overflow-y-visible bg-white py-14 md:py-20",
+        /* `hidden` + `visible` em eixos diferentes vira `auto` no outro eixo; scroll indesejado. `clip` não. */
+        "relative z-0 overflow-x-clip overflow-y-visible bg-[#f4f7f7] py-14 md:py-20",
         /* Altura total do frame Figma 22 (487px) em desktop, com padding 100 igual ao arquivo. */
         "lg:box-border lg:h-[487px] lg:min-h-[487px] lg:max-h-[487px] lg:shrink-0 lg:py-[100px]",
       ].join(" ")}
     >
-      <div
-        className="pointer-events-none absolute right-0 top-[176px] hidden h-[501px] w-[715px] opacity-80 lg:block"
-        aria-hidden
-      >
-        <div className="flex h-full w-full items-center justify-center">
-          <div className="flex-none -rotate-[99.79deg]">
-            <div className="relative h-[658px] w-[395px]">
-              <div className="absolute inset-[-32%_-53%]">
-                <img src={imgEllipse} alt="" className="block size-full max-w-none object-contain" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <Container className="h-full lg:min-h-0 lg:h-full">
         {/*
           Área útil no Figma: 487 − 200 = 287px de altura. Coluna esquerda no topo; mocks alinhados
@@ -94,30 +78,32 @@ export function AppPreview() {
           </div>
 
           {/*
-            Ancorado embaixo, o bloco 694×582 escala pela largura da coluna e sobra para cima.
+            Ancorado embaixo, o bloco escala pela largura da coluna e sobra para baixo.
             translateY = altura do bloco − altura da área (cqh), para o topo alinhar à área útil
             e o excesso ir só para baixo (sob Metrics), sem invadir a seção anterior.
           */}
           <div className="relative flex min-h-0 w-full min-w-0 items-end justify-end overflow-visible [container-type:size] [container-name:app-mock] lg:h-full lg:min-h-0">
             <div
-              className="relative mx-auto w-full max-w-[694px] max-lg:mx-auto max-lg:max-w-[min(694px,calc(100vw-48px))] lg:mx-0 lg:ml-auto lg:mr-0 lg:[transform:translateY(max(0px,calc(min(100cqw,694px)*582/694-100cqh)))]"
+              className="relative mx-auto w-full max-w-[660px] max-lg:mx-auto max-lg:max-w-[min(660px,calc(100vw-48px))] lg:mx-0 lg:ml-auto lg:mr-0 lg:[transform:translateY(max(0px,calc(min(100cqw,660px)*485/660-100cqh)))]"
               style={{ aspectRatio: `${PREVIEW_W} / ${PREVIEW_H}` }}
             >
               <div className="absolute inset-0 overflow-visible">
-                <img
-                  src={imgScreen}
-                  alt="Preview da plataforma web"
-                  width={MAC_W}
-                  height={MAC_H}
-                  className="absolute z-[1] max-h-none max-w-none object-contain"
+                <div
+                  className="absolute z-[1] overflow-hidden"
                   style={{
                     left: pct(MAC_LEFT, PREVIEW_W),
                     top: pct(MAC_TOP, PREVIEW_H),
                     width: pct(MAC_W, PREVIEW_W),
                     height: pct(MAC_H, PREVIEW_H),
                   }}
-                  decoding="async"
-                />
+                >
+                  <img
+                    src={imgScreen}
+                    alt="Preview da plataforma web"
+                    className="absolute inset-0 size-full max-w-none object-contain"
+                    decoding="async"
+                  />
+                </div>
                 <img
                   src={imgPhone}
                   alt="Preview do app mobile"

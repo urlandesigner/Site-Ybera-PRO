@@ -1,5 +1,6 @@
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
+import { CarouselInfinite } from "@/components/ui/CarouselInfinite";
 
 const LOGO_SRC = {
   yberaParis:
@@ -12,39 +13,50 @@ const LOGO_SRC = {
     "https://www.figma.com/api/mcp/asset/55d35d58-1a16-4590-84cd-f6bd0ab19611",
 } as const;
 
+const LOGO_IMAGES = [
+  LOGO_SRC.yberaParis,
+  LOGO_SRC.fashionGold,
+  LOGO_SRC.terraCoco,
+  LOGO_SRC.blackDiva,
+] as const;
+
+const LOGO_ALTS = [
+  "Logo Ybera Paris",
+  "Logo Fashion Gold",
+  "Logo Terra Coco",
+  "Logo Black Diva",
+] as const;
+
+/** Mesmas dimensões da grid estática anterior (sem distorcer com caixa única). */
+const LOGO_SLIDE_DIMS = [
+  { width: "197px", height: "71px" },
+  { width: "123px", height: "64px" },
+  { width: "108px", height: "108px" },
+  { width: "136px", height: "88px" },
+] as const;
+
 export function StoreProof() {
   return (
-    <Section id="store-proof" className="bg-white py-5">
+    <Section
+      id="store-proof"
+      spacing="none"
+      className="bg-[#f4f7f7] pt-0 pb-14 md:pb-20 lg:pb-[100px]"
+    >
       <Container>
-        <div className="grid auto-rows-fr grid-cols-2 items-center gap-4 py-6 md:h-[200px] md:grid-cols-4 md:gap-12 md:py-0">
-          <div className="flex min-h-[120px] items-center justify-center rounded-[20px] bg-white p-4 md:h-[200px] md:min-h-0 md:p-6">
-            <img
-              src={LOGO_SRC.yberaParis}
-              alt="Logo Ybera Paris"
-              className="h-[71px] w-[197px] object-contain"
-            />
-          </div>
-          <div className="flex min-h-[120px] items-center justify-center rounded-[20px] bg-white p-4 md:h-[200px] md:min-h-0 md:p-6">
-            <img
-              src={LOGO_SRC.fashionGold}
-              alt="Logo Fashion Gold"
-              className="h-16 w-[123px] object-contain"
-            />
-          </div>
-          <div className="flex min-h-[120px] items-center justify-center rounded-[20px] bg-white p-4 md:h-[200px] md:min-h-0 md:p-6">
-            <img
-              src={LOGO_SRC.terraCoco}
-              alt="Logo Terra Coco"
-              className="h-[108px] w-[108px] object-contain"
-            />
-          </div>
-          <div className="flex min-h-[120px] items-center justify-center rounded-[20px] bg-white p-4 md:h-[200px] md:min-h-0 md:p-6">
-            <img
-              src={LOGO_SRC.blackDiva}
-              alt="Logo Black Diva"
-              className="h-[88px] w-[136px] object-contain"
-            />
-          </div>
+        <div className="mx-auto w-full max-w-[min(100%,72rem)] py-2">
+          <CarouselInfinite
+            images={[...LOGO_IMAGES]}
+            alts={[...LOGO_ALTS]}
+            slideDimensions={LOGO_SLIDE_DIMS}
+            backgroundColor="transparent"
+            imageBgColor="transparent"
+            imageBorderRadius="0.5rem"
+            imageOpacity={0.5}
+            imageObjectFit="contain"
+            animationDuration={32}
+            maskGradient="linear-gradient(to right, transparent, black 12%, black 88%, transparent)"
+            maxWidth="100%"
+          />
         </div>
       </Container>
     </Section>

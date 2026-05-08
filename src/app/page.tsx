@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { AppPreview } from "@/components/sections/AppPreview";
@@ -6,14 +8,12 @@ import { Benefits } from "@/components/sections/Benefits";
 import { ControlPanel } from "@/components/sections/ControlPanel";
 import { Ecosystem } from "@/components/sections/Ecosystem";
 import { EcosystemStrip } from "@/components/sections/EcosystemStrip";
-import { ExclusiveProducts } from "@/components/sections/ExclusiveProducts";
 import { FAQ } from "@/components/sections/FAQ";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { Hero } from "@/components/sections/Hero";
 import { Metrics } from "@/components/sections/Metrics";
 import { Opportunity } from "@/components/sections/Opportunity";
 import { Products } from "@/components/sections/Products";
-import { RecurringIncome } from "@/components/sections/RecurringIncome";
 import { StoreProof } from "@/components/sections/StoreProof";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { Tools } from "@/components/sections/Tools";
@@ -27,7 +27,6 @@ export default function Home() {
         <EcosystemStrip />
         <AudienceTabs />
         <ControlPanel />
-        <RecurringIncome />
         <Opportunity />
         <Benefits />
         <Tools />
@@ -36,9 +35,10 @@ export default function Home() {
         <Metrics />
         <Products />
         <StoreProof />
-        <ExclusiveProducts />
         <Testimonials />
-        <FinalCTA />
+        <Suspense fallback={null}>
+          <FinalCTA />
+        </Suspense>
         <FAQ />
       </main>
       <Footer />

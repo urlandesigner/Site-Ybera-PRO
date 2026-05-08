@@ -8,7 +8,7 @@ type HeroClubBadgeProps = {
 };
 
 /**
- * Badge “clube” da hero — Figma Site---PRO nó 2379:3117 (Colors/Alfa/secondary).
+ * Badge “clube” da hero: Figma Site---PRO nó 2379:3117 (Colors/Alfa/secondary).
  * Texto com gradiente animado (Magic UI), cores alinhadas ao hero.
  */
 export function HeroClubBadge({ children, className }: HeroClubBadgeProps) {

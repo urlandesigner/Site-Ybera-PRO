@@ -17,7 +17,7 @@
   --color-ink-inverse: 248 250 252;
   --color-border: 203 213 225;
 
-  /* Figma Colors/Alfa/secondary — hero badge fill (nó 2354:4587) */
+  /* Figma Colors/Alfa/secondary: hero badge fill (nó 2354:4587) */
   --palette-alfa-secondary: rgb(5 5 5 / 10%);
 
   /* Typography */
@@ -64,7 +64,7 @@
   --shadow-md: 0 8px 24px rgb(15 23 42 / 0.08);
   --shadow-lg: 0 16px 40px rgb(15 23 42 / 0.12);
 
-  /* Card frame: 1px ring — teal no canto superior-esquerdo; clareia em diagonal e termina em 0% opacidade (sem branco sólido na borda). */
+  /* Card frame: 1px ring; teal no canto superior-esquerdo; clareia em diagonal e termina em 0% opacidade (sem branco sólido na borda). */
   --gradient-card-border: linear-gradient(
     to bottom right,
     #3f9896 0%,

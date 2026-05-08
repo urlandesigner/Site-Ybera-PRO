@@ -10,8 +10,8 @@ import { cn } from "@/lib/utils";
 const testimonials = [
   {
     image: "/images/feedback01.jpg",
-    name: "Rolando Hintz",
-    role: "Distribuidor PRO — Região Sudeste",
+    name: "Joana Bascelos",
+    role: "Distribuidor PRO, Região Sudeste",
     quote:
       "O PRO organizou minha carteira e a recompra virou previsível. Hoje sei exatamente quem precisa de atenção e onde está meu lucro.",
   },
@@ -25,14 +25,14 @@ const testimonials = [
   {
     image: "/images/feedback01.jpg",
     name: "Mariana Silva",
-    role: "Cabeleireira — Belo Horizonte",
+    role: "Cabeleireira, Belo Horizonte",
     quote:
       "Consigo comprar com margem melhor e acompanhar tudo pelo app. Menos improviso e mais tempo com minhas clientes.",
   },
   {
     image: "/images/feedback02.jpg",
-    name: "Ana Paula Costa",
-    role: "Salão parceiro — Curitiba",
+    name: "Fred Benevides",
+    role: "Salão parceiro, Curitiba",
     quote:
       "Transparência nas comissões e suporte do distribuidor integrado ao PRO. Finalmente uma operação que escala com a gente.",
   },
@@ -67,7 +67,7 @@ export function Testimonials() {
       >
         {testimonials.map((slide, slideIndex) => (
           <div
-            key={slide.image}
+            key={slideIndex}
             className={cn(
               "absolute inset-0 overflow-hidden transition-opacity duration-500 ease-out motion-reduce:transition-none",
               slideIndex === index ? "z-[1] opacity-100" : "z-0 opacity-0"
@@ -86,7 +86,7 @@ export function Testimonials() {
 
       {/* Shell alinhado ao frame 1512px; padding lateral 100px (Figma) */}
       <div className="relative z-[1] mx-auto w-full max-w-[1512px] min-h-[min(520px,92svh)] px-6 lg:min-h-[800px] lg:px-[100px]">
-        {/* Aspas decorativas (asset Figma) + color-burn — ≈ left 212px, top 253px */}
+        {/* Aspas decorativas (asset Figma) + color-burn; ≈ left 212px, top 253px */}
         <div
           aria-hidden
           className="pointer-events-none absolute left-[14.04%] top-[31.6%] hidden size-[min(52vw,388px)] lg:left-[212px] lg:top-[252.89px] lg:block"

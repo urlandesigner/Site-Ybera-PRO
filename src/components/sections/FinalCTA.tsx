@@ -1,14 +1,18 @@
 "use client";
 
 import type { KeyboardEvent } from "react";
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { Container } from "@/components/layout/Container";
-import { faArrowRight, faCheck } from "@/lib/fa-icons";
+import { faCheck } from "@/lib/fa-icons";
 import { Section } from "@/components/layout/Section";
 import { FaIcon } from "@/components/icons/FaIcon";
+import { GlassProCta } from "@/components/ui/GlassProCta";
+import type { ProfileTabId } from "@/lib/profile-tabs";
+import { profileTabFromSearchParam } from "@/lib/profile-tabs";
 
-type ProfileTab = "distribuidor" | "representante" | "profissional";
+type ProfileTab = ProfileTabId;
 
 const TABS: { id: ProfileTab; label: string }[] = [
   { id: "distribuidor", label: "Distribuidor" },
@@ -16,7 +20,7 @@ const TABS: { id: ProfileTab; label: string }[] = [
   { id: "profissional", label: "Profissional" },
 ];
 
-/** Conteúdo do formulário por aba — hoje igual em todos; troque por perfil quando o copy existir. */
+/** Conteúdo do formulário por aba: hoje igual em todos; troque por perfil quando o copy existir. */
 const formByTab: Record<
   ProfileTab,
   {
@@ -41,7 +45,7 @@ const formByTab: Record<
       ],
     ],
     cityLabel: "Cidade ou região de atuação",
-    cityPlaceholder: "Ex: São Paulo — SP",
+    cityPlaceholder: "Ex: São Paulo, SP",
     submitLabel: "Criar minha conta",
     footnote: "Seus dados serão analisados e você será contatado para ativação.",
   },
@@ -58,7 +62,7 @@ const formByTab: Record<
       ],
     ],
     cityLabel: "Cidade ou região de atuação",
-    cityPlaceholder: "Ex: São Paulo — SP",
+    cityPlaceholder: "Ex: São Paulo, SP",
     submitLabel: "Criar minha conta",
     footnote: "Seus dados serão analisados e você será contatado para ativação.",
   },
@@ -75,7 +79,7 @@ const formByTab: Record<
       ],
     ],
     cityLabel: "Cidade ou região de atuação",
-    cityPlaceholder: "Ex: São Paulo — SP",
+    cityPlaceholder: "Ex: São Paulo, SP",
     submitLabel: "Criar minha conta",
     footnote: "Seus dados serão analisados e você será contatado para ativação.",
   },
@@ -87,26 +91,41 @@ const tabBtnBase =
 export function FinalCTA() {
   const [tab, setTab] = useState<ProfileTab>("distribuidor");
   const uid = useId();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const form = formByTab[tab];
   const tabIndex = TABS.findIndex((t) => t.id === tab);
+
+  useEffect(() => {
+    const fromUrl = profileTabFromSearchParam(searchParams.get("perfil"));
+    if (fromUrl) setTab(fromUrl);
+  }, [searchParams]);
+
+  const selectTab = (id: ProfileTab) => {
+    setTab(id);
+    const next = new URLSearchParams(searchParams.toString());
+    next.set("perfil", id);
+    router.replace(`${pathname}?${next.toString()}#final-cta`, { scroll: false });
+  };
 
   const onTabKeyDown = (e: KeyboardEvent<HTMLButtonElement>, currentId: ProfileTab) => {
     if (e.key !== "ArrowRight" && e.key !== "ArrowLeft" && e.key !== "Home" && e.key !== "End") return;
     e.preventDefault();
     const idx = TABS.findIndex((t) => t.id === currentId);
     if (e.key === "Home") {
-      setTab(TABS[0]!.id);
+      selectTab(TABS[0]!.id);
       return;
     }
     if (e.key === "End") {
-      setTab(TABS[TABS.length - 1]!.id);
+      selectTab(TABS[TABS.length - 1]!.id);
       return;
     }
     const next =
       e.key === "ArrowRight"
         ? (idx + 1) % TABS.length
         : (idx - 1 + TABS.length) % TABS.length;
-    setTab(TABS[next]!.id);
+    selectTab(TABS[next]!.id);
   };
 
   return (
@@ -178,7 +197,7 @@ export function FinalCTA() {
                         id={`${uid}-tab-${id}`}
                         aria-selected={selected}
                         aria-controls={`${uid}-panel`}
-                        onClick={() => setTab(id)}
+                        onClick={() => selectTab(id)}
                         onKeyDown={(e) => onTabKeyDown(e, id)}
                         className={[
                           tabBtnBase,
@@ -232,13 +251,9 @@ export function FinalCTA() {
                 </div>
 
                 <div className="space-y-[18px]">
-                  <button
-                    type="button"
-                    className="flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#1f6665] px-5 py-3 font-sans text-sm font-bold text-white transition-colors hover:bg-[#185654] active:bg-[#144848]"
-                  >
-                    {form.submitLabel}{" "}
-                    <FaIcon icon={faArrowRight} className="inline h-3.5 w-3.5 align-[-2px]" aria-hidden />
-                  </button>
+                  <GlassProCta type="button" tone="light" className="w-full">
+                    {form.submitLabel}
+                  </GlassProCta>
                   <p className="text-center font-sans text-xs leading-4 text-[#505052]">{form.footnote}</p>
                 </div>
               </div>

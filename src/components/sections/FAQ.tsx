@@ -3,9 +3,10 @@
 import { useId, useState } from "react";
 
 import { Container } from "@/components/layout/Container";
-import { faArrowRight, faChevronDown } from "@/lib/fa-icons";
+import { faChevronDown } from "@/lib/fa-icons";
 import { Section } from "@/components/layout/Section";
 import { FaIcon } from "@/components/icons/FaIcon";
+import { GlassProCta } from "@/components/ui/GlassProCta";
 
 type FaqItem = {
   question: string;
@@ -46,7 +47,7 @@ const faqItems: FaqItem[] = [
   {
     question: "Como ganho dinheiro com o PRO?",
     answer:
-      "Através de comissões, recompra da base, benefícios do ecossistema e ferramentas que ajudam a organizar vendas e ativar clientes — conforme o seu papel na rede.",
+      "Através de comissões, recompra da base, benefícios do ecossistema e ferramentas que ajudam a organizar vendas e ativar clientes, conforme o seu papel na rede.",
   },
   {
     question: "Posso cancelar quando quiser?",
@@ -79,13 +80,9 @@ export function FAQ() {
             </div>
 
             <div className="space-y-3">
-              <button
-                type="button"
-                className="flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#1f6665] px-5 font-sans text-sm font-bold text-white transition-colors hover:bg-[#185654] active:bg-[#144848] sm:h-auto sm:w-auto sm:py-3"
-              >
-                Quero me cadastrar{" "}
-                <FaIcon icon={faArrowRight} className="inline h-3.5 w-3.5 align-[-2px]" aria-hidden />
-              </button>
+              <GlassProCta href="#final-cta" tone="light" className="w-full sm:w-auto">
+                Quero me cadastrar
+              </GlassProCta>
               <p className="font-sans text-xs leading-4 text-black">
                 Seu cadastro será analisado e você será contatado em breve.
               </p>

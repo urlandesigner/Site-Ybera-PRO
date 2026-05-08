@@ -2,6 +2,7 @@ import { Container } from "@/components/layout/Container";
 import { faArrowRight } from "@/lib/fa-icons";
 import { Section } from "@/components/layout/Section";
 import { FaIcon } from "@/components/icons/FaIcon";
+import { GlassProCta } from "@/components/ui/GlassProCta";
 
 function ListArrowIcon() {
   return (
@@ -11,21 +12,6 @@ function ListArrowIcon() {
   );
 }
 
-/** Seta do CTA — `faArrowRight` */
-function CtaArrowIcon({ variant }: { variant: "brandSolid" | "brandSoft" }) {
-  const wrap =
-    variant === "brandSolid"
-      ? "inline-flex size-6 shrink-0 items-center justify-center text-white"
-      : "inline-flex size-4 shrink-0 items-center justify-center text-[#1f6665]";
-  return (
-    <span className={wrap} aria-hidden>
-      <FaIcon icon={faArrowRight} className="h-3 w-3" />
-    </span>
-  );
-}
-
-type CtaVariant = "brandSolid" | "brandSoft";
-
 type AudienceCard = {
   label: string;
   labelColor: string;
@@ -34,7 +20,6 @@ type AudienceCard = {
   title: string;
   description: string;
   points: string[];
-  ctaVariant: CtaVariant;
   ctaText: string;
   ctaEmphasis?: string;
 };
@@ -53,7 +38,6 @@ const cards: AudienceCard[] = [
       "Acompanhe ciclos de recompra por profissional",
       "Métricas comerciais em tempo real",
     ],
-    ctaVariant: "brandSolid",
     ctaText: "Começar como ",
     ctaEmphasis: "Distribuidor",
   },
@@ -70,7 +54,6 @@ const cards: AudienceCard[] = [
       "Participe de campanhas e promoções exclusivas",
       "Gestão de agenda e clientes integrada",
     ],
-    ctaVariant: "brandSolid",
     ctaText: "Entrar como Profissional",
   },
   {
@@ -86,19 +69,24 @@ const cards: AudienceCard[] = [
       "Acompanhe sua carteira de ativações",
       "Suporte direto ao profissional no campo",
     ],
-    ctaVariant: "brandSoft",
     ctaText: "Entrar como Representante",
   },
 ];
 
-function AudienceCardCta({ card }: { card: AudienceCard }) {
-  const shell =
-    card.ctaVariant === "brandSolid"
-      ? "inline-flex h-11 w-full shrink-0 cursor-pointer items-center justify-center gap-1 self-stretch rounded-[12px] bg-[#1f6665] px-3 py-2 font-sans text-sm leading-[18px] text-white transition-colors hover:bg-[#185654] sm:h-9 sm:w-fit sm:self-start lg:h-9"
-      : "inline-flex h-11 w-full shrink-0 cursor-pointer items-center justify-center gap-1 self-stretch rounded-[12px] bg-[rgba(74,170,169,0.1)] px-3 py-2 font-sans text-sm leading-[18px] text-[#1f6665] transition-colors hover:bg-[rgba(74,170,169,0.18)] sm:h-9 sm:w-fit sm:self-start lg:h-9";
+function perfilParamFromLabel(label: string) {
+  return label.toLowerCase();
+}
 
+function AudienceCardCta({ card }: { card: AudienceCard }) {
+  const emphasis = card.ctaEmphasis != null ? "primary" : "secondary";
   return (
-    <button type="button" className={shell}>
+    <GlassProCta
+      href={`/?perfil=${perfilParamFromLabel(card.label)}#final-cta`}
+      tone="light"
+      emphasis={emphasis}
+      size="small"
+      className="w-full self-stretch sm:w-fit sm:self-start"
+    >
       {card.ctaEmphasis != null ? (
         <span className="whitespace-nowrap text-center">
           <span className="font-normal">{card.ctaText}</span>
@@ -107,8 +95,7 @@ function AudienceCardCta({ card }: { card: AudienceCard }) {
       ) : (
         <span className="whitespace-nowrap font-semibold">{card.ctaText}</span>
       )}
-      <CtaArrowIcon variant={card.ctaVariant} />
-    </button>
+    </GlassProCta>
   );
 }
 
@@ -133,7 +120,7 @@ export function AudienceTabs() {
             {cards.map((card) => (
               <article
                 key={card.label}
-                className="card-border-shell card-border-r20"
+                className="card-border-shell card-border-r20 transition-transform duration-300 ease-out hover:-translate-y-2"
               >
                 <div className="card-border-inner card-border-r20 flex min-h-0 flex-col justify-between bg-[#f4f7f7] px-5 py-7 lg:min-h-[480px] lg:px-[24px] lg:py-[36px]">
                   <div className="flex flex-1 flex-col gap-6">
