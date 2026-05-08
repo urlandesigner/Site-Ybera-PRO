@@ -45,7 +45,9 @@ export default function Home() {
         <Suspense fallback={null}>
           <Tools />
         </Suspense>
-        <Ecosystem />
+        <Suspense fallback={null}>
+          <Ecosystem />
+        </Suspense>
         <Suspense fallback={null}>
           <AppPreview />
         </Suspense>
