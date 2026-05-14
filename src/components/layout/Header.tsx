@@ -121,13 +121,15 @@ export function Header({ variant: variantProp = "auto" }: HeaderProps) {
 
   const handleNavClick = (href: string, closeMobile = false) => {
     if (closeMobile) setMobileOpen(false);
-    if (href !== "#audience-tabs") return;
+    if (href !== "#audience-tabs" && href !== "#benefits" && href !== "#control-panel") return;
 
-    const target = document.getElementById("audience-tabs");
+    const target = document.getElementById(href.slice(1));
     if (!target) return;
 
-    // For this specific section, ignore global scroll-padding and pin it at viewport top.
-    const top = Math.max(0, window.scrollY + target.getBoundingClientRect().top);
+    // For these section jumps, ignore global scroll-padding and control the exact landing position.
+    const headerOffset =
+      href === "#control-panel" ? (headerElRef.current?.getBoundingClientRect().bottom ?? 64) : 0;
+    const top = Math.max(0, window.scrollY + target.getBoundingClientRect().top - headerOffset);
     window.scrollTo({ top, behavior: "smooth" });
   };
 
@@ -154,7 +156,7 @@ export function Header({ variant: variantProp = "auto" }: HeaderProps) {
             href={item.href}
             className={navLink[a]}
             onClick={(e) => {
-              if (item.href !== "#audience-tabs") return;
+              if (item.href !== "#audience-tabs" && item.href !== "#benefits" && item.href !== "#control-panel") return;
               e.preventDefault();
               handleNavClick(item.href);
             }}
@@ -213,7 +215,7 @@ export function Header({ variant: variantProp = "auto" }: HeaderProps) {
                 href={item.href}
                 className={[navLink[a], "rounded-lg py-2.5 max-lg:min-h-[44px] max-lg:px-1"].join(" ")}
                 onClick={(e) => {
-                  if (item.href === "#audience-tabs") {
+                  if (item.href === "#audience-tabs" || item.href === "#benefits" || item.href === "#control-panel") {
                     e.preventDefault();
                     handleNavClick(item.href, true);
                     return;

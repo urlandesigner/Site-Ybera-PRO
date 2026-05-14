@@ -8,9 +8,7 @@ import {
 } from "@/components/layout/HeaderProfileSubheader";
 import { AppPreview } from "@/components/sections/AppPreview";
 import { AudienceTabs } from "@/components/sections/AudienceTabs";
-import { Benefits } from "@/components/sections/Benefits";
-import { ControlPanel } from "@/components/sections/ControlPanel";
-import { Ecosystem } from "@/components/sections/Ecosystem";
+import { ParallaxControlOverlap } from "@/components/sections/ParallaxControlOverlap";
 import { EcosystemStrip } from "@/components/sections/EcosystemStrip";
 import { FAQ } from "@/components/sections/FAQ";
 import { FinalCTA } from "@/components/sections/FinalCTA";
@@ -31,22 +29,16 @@ export default function Home() {
         <EcosystemStrip />
         <AudienceTabs />
         <Suspense fallback={null}>
-          <Benefits />
+          <ParallaxControlOverlap />
         </Suspense>
         <Suspense fallback={<HeaderProfileSubheaderFallback />}>
           <HeaderProfileSubheader />
-        </Suspense>
-        <Suspense fallback={null}>
-          <ControlPanel />
         </Suspense>
         <Suspense fallback={null}>
           <Opportunity />
         </Suspense>
         <Suspense fallback={null}>
           <Tools />
-        </Suspense>
-        <Suspense fallback={null}>
-          <Ecosystem />
         </Suspense>
         <Suspense fallback={null}>
           <AppPreview />

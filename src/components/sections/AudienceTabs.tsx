@@ -3,6 +3,7 @@ import { faArrowRight } from "@/lib/fa-icons";
 import { Section } from "@/components/layout/Section";
 import { FaIcon } from "@/components/icons/FaIcon";
 import { GlassProCta } from "@/components/ui/GlassProCta";
+import { PersonaEditorialPill } from "@/components/ui/PersonaEditorialPill";
 
 function ListArrowIcon() {
   return (
@@ -15,8 +16,6 @@ function ListArrowIcon() {
 type AudienceCard = {
   label: string;
   labelColor: string;
-  labelBg: string;
-  labelBorder: string;
   title: string;
   description: string;
   points: string[];
@@ -27,9 +26,7 @@ type AudienceCard = {
 const cards: AudienceCard[] = [
   {
     label: "Distribuidor",
-    labelColor: "#a65f00",
-    labelBg: "#fefce8",
-    labelBorder: "#fff085",
+    labelColor: "#1f6665",
     title: "Venda mais sem precisar operar estoque ou entrega",
     description: "Controle sua carteira, aumente a recompra e acompanhe tudo em tempo real.",
     points: [
@@ -43,9 +40,7 @@ const cards: AudienceCard[] = [
   },
   {
     label: "Profissional",
-    labelColor: "#1447e6",
-    labelBg: "#eff6ff",
-    labelBorder: "#bedbff",
+    labelColor: "#1f3f7a",
     title: "Compre melhor e aumente sua margem em cada serviço",
     description: "Acesse produtos exclusivos e benefícios que aumentam seu lucro.",
     points: [
@@ -58,9 +53,7 @@ const cards: AudienceCard[] = [
   },
   {
     label: "Representante",
-    labelColor: "#008236",
-    labelBg: "#f0fdf4",
-    labelBorder: "#b9f8cf",
+    labelColor: "#435950",
     title: "Ative profissionais e aumente suas vendas na prática",
     description: "Expanda sua base e ganhe mais com cada nova ativação.",
     points: [
@@ -116,24 +109,15 @@ export function AudienceTabs() {
             </p>
           </header>
 
-          <div className="grid grid-cols-1 gap-7 lg:grid-cols-3 lg:gap-9">
+          <div className="grid grid-cols-1 gap-7 lg:grid-cols-3 lg:items-stretch lg:gap-9">
             {cards.map((card) => (
               <article
                 key={card.label}
-                className="card-border-shell card-border-r20 transition-transform duration-300 ease-out hover:-translate-y-2"
+                className="card-border-shell card-border-r20 h-full min-h-0 transition-transform duration-300 ease-out hover:-translate-y-2"
               >
-                <div className="card-border-inner card-border-r20 flex min-h-0 flex-col justify-between bg-[#f4f7f7] px-5 py-7 lg:min-h-[480px] lg:px-[24px] lg:py-[36px]">
-                  <div className="flex flex-1 flex-col gap-6">
-                    <span
-                      className="inline-flex w-fit rounded-full border border-solid px-[9px] py-[5px] font-sans text-sm font-semibold leading-[18px]"
-                      style={{
-                        color: card.labelColor,
-                        backgroundColor: card.labelBg,
-                        borderColor: card.labelBorder,
-                      }}
-                    >
-                      {card.label}
-                    </span>
+                <div className="card-border-inner card-border-r20 flex h-full min-h-0 flex-col gap-8 bg-[#f4f7f7] px-5 py-7 lg:px-[24px] lg:py-[36px]">
+                  <div className="flex min-h-0 flex-1 flex-col gap-6">
+                    <PersonaEditorialPill accentColor={card.labelColor}>{card.label}</PersonaEditorialPill>
 
                     <div className="flex flex-col gap-3">
                       <h3 className="font-display text-[18px] font-semibold leading-6 text-[#1e1e1f] [font-feature-settings:'lnum'_1,'tnum'_1]">

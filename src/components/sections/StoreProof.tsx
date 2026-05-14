@@ -36,7 +36,7 @@ export function StoreProof() {
     <Section
       id="store-proof"
       spacing="none"
-      className="bg-[#f4f7f7] pt-0 pb-14 md:pb-20 lg:pb-[100px]"
+      className="bg-[#f4f7f7] pt-0 pb-[50px] md:pb-[50px] lg:pb-[50px]"
     >
       <Container>
         <div className="mx-auto w-full max-w-[min(100%,72rem)] py-2">
@@ -48,6 +48,7 @@ export function StoreProof() {
             imageBgColor="transparent"
             imageBorderRadius="0.5rem"
             imageOpacity={0.5}
+            imageGap="clamp(1.5rem, 4vw, 4rem)"
             imageObjectFit="contain"
             animationDuration={32}
             maskGradient="linear-gradient(to right, transparent, black 12%, black 88%, transparent)"

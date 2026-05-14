@@ -3,22 +3,17 @@
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Container } from "@/components/layout/Container";
+import { FaIcon } from "@/components/icons/FaIcon";
 import { Section } from "@/components/layout/Section";
+import { BackgroundSnippets } from "@/components/ui/background-snippets";
+import { faCheck } from "@/lib/fa-icons";
 import { useActiveProfile } from "@/lib/profile-content";
 import type { ProfileTabId } from "@/lib/profile-tabs";
-import { cn } from "@/lib/utils";
 
 const AUTO_ADVANCE_MS = 5000;
 const PROGRESS_TICK_MS = 80;
 
-const expandedAudienceIds = ["distribuidores", "representantes", "profissionais"] as const;
-type ExpandedAudienceId = (typeof expandedAudienceIds)[number];
-
-const expandedAudienceLabels: Record<ExpandedAudienceId, string> = {
-  distribuidores: "Distribuidores",
-  representantes: "Representantes",
-  profissionais: "Profissionais",
-};
+type ExpandedAudienceId = "distribuidores" | "representantes" | "profissionais";
 
 const expandedFeaturesByAudience: Record<
   ExpandedAudienceId,
@@ -278,14 +273,12 @@ export function ControlPanel() {
   const [activeFeatureIndex, setActiveFeatureIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [showAllFeatures, setShowAllFeatures] = useState(false);
-  const [expandedAudience, setExpandedAudience] = useState<ExpandedAudienceId>(content.expandedAudience);
   const activeFeature = primaryFeatures[activeFeatureIndex];
 
   useEffect(() => {
     setActiveFeatureIndex(0);
     setProgress(0);
-    setExpandedAudience(content.expandedAudience);
-  }, [content.expandedAudience, profile]);
+  }, [profile]);
 
   useEffect(() => {
     setProgress(0);
@@ -307,8 +300,12 @@ export function ControlPanel() {
   }, [activeFeatureIndex, primaryFeatures.length]);
 
   return (
-    <Section id="control-panel" className="bg-[#020b10] py-14 md:py-20 lg:py-[100px]">
-      <Container>
+    <Section
+      id="control-panel"
+      className="relative z-10 overflow-hidden bg-[#020b10] py-14 md:py-20 lg:z-20 lg:-mt-[var(--como-funciona-overlap,0px)] lg:py-[100px]"
+    >
+      <BackgroundSnippets variant="dark" />
+      <Container className="relative z-10">
         <div className="space-y-8 lg:space-y-10">
           <header className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,392px)] lg:items-start lg:gap-10">
             <h2 className="max-w-[620px] font-display text-[28px] font-semibold leading-9 text-white lg:text-[32px] lg:leading-10">
@@ -319,9 +316,10 @@ export function ControlPanel() {
             </p>
           </header>
 
-          <div className="card-border-r20 mx-auto w-full max-h-[498px] overflow-hidden bg-[#06131a] lg:w-[86.4%]">
-            <div className="card-border-r20 relative max-h-[498px] overflow-hidden">
+          <div className="card-border-r20 mx-auto w-full max-h-[640px] overflow-hidden bg-[#06131a] lg:w-[86.4%]">
+            <div className="card-border-r20 relative max-h-[640px] overflow-hidden">
               <img
+                key={activeFeature.image}
                 src={activeFeature.image}
                 alt={activeFeature.alt}
                 className="h-auto w-full object-cover object-top"
@@ -413,66 +411,23 @@ export function ControlPanel() {
             <div
               className="border-t border-[#1d2b33] pt-8 lg:pt-10"
               role="region"
-              aria-label="Funcionalidades por perfil"
+              aria-label="Todas as funcionalidades"
             >
-              <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[minmax(0,220px)_minmax(0,1fr)] lg:items-start lg:gap-x-12 xl:grid-cols-[minmax(0,260px)_minmax(0,1fr)] xl:gap-x-16">
-                <nav aria-label="Escolha o perfil" className="flex flex-col">
-                  <p className="mb-3 font-sans text-xs font-bold uppercase tracking-[1.2px] text-white/45">
-                    Por público
-                  </p>
-                  <div role="tablist" className="relative pl-6">
-                    <span
-                      className="pointer-events-none absolute bottom-2 left-0 top-2 w-px bg-white/25"
-                      aria-hidden
-                    />
-                    {expandedAudienceIds.map((id) => {
-                      const selected = expandedAudience === id;
-                      return (
-                        <button
-                          key={id}
-                          type="button"
-                          role="tab"
-                          aria-selected={selected}
-                          aria-controls={`control-panel-features-${id}`}
-                          id={`control-panel-tab-${id}`}
-                          onClick={() => setExpandedAudience(id)}
-                          className={cn(
-                            "relative block w-full py-2.5 text-left font-display text-[22px] font-semibold leading-[1.15] tracking-[-0.01em] transition-colors lg:text-[24px]",
-                            selected ? "text-white" : "text-white/50 hover:text-white/75",
-                          )}
-                        >
-                          <span
-                            className={cn(
-                              "pointer-events-none absolute -left-6 top-1/2 h-8 w-[3px] -translate-y-1/2 rounded-full opacity-0 transition-opacity duration-300",
-                              selected && "bg-[#1f6665] opacity-100",
-                            )}
-                            aria-hidden
-                          />
-                          {expandedAudienceLabels[id]}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </nav>
-
-                <div
-                  role="tabpanel"
-                  id={`control-panel-features-${expandedAudience}`}
-                  aria-labelledby={`control-panel-tab-${expandedAudience}`}
-                  className="min-w-0 border-t border-[#1d2b33] pt-8 lg:border-t-0 lg:border-l lg:border-[#1d2b33] lg:pt-0 lg:pl-10 xl:pl-14"
-                >
-                  <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 md:gap-x-10 md:gap-y-12">
-                    {expandedFeaturesByAudience[expandedAudience].map((item) => (
-                      <div key={item.title} className="min-w-0 border-b border-[#243842]/80 pb-8 last:border-b-0 last:pb-0 md:border-0 md:pb-0">
-                        <h4 className="font-display text-[17px] font-semibold leading-snug tracking-normal text-white lg:text-lg">
-                          {item.title}
-                        </h4>
-                        <p className="mt-2 font-sans text-[15px] leading-relaxed text-white/75 lg:text-base lg:leading-6">
-                          {item.description}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
+              <div className="min-w-0">
+                <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 md:gap-x-10 md:gap-y-12 lg:grid-cols-3">
+                  {expandedFeaturesByAudience[content.expandedAudience].map((item) => (
+                    <div key={item.title} className="min-w-0 border-b border-[#243842]/80 pb-8 last:border-b-0 last:pb-0 md:border-0 md:pb-0">
+                      <span className="mb-5 block text-white">
+                        <FaIcon icon={faCheck} className="h-3.5 w-3.5" aria-hidden />
+                      </span>
+                      <h4 className="font-display text-base font-semibold leading-snug tracking-normal text-white">
+                        {item.title}
+                      </h4>
+                      <p className="mt-2 font-sans text-base leading-relaxed text-white/40 lg:leading-6">
+                        {item.description}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

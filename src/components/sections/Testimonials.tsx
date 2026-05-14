@@ -119,7 +119,7 @@ export function Testimonials() {
       spacing="none"
       className="relative isolate overflow-hidden bg-[rgba(74,170,169,0.1)] py-12 md:py-16 lg:py-0"
     >
-      {/* Fundo: luminosity + crop vertical (≈125.95% altura, -4.56% top) como no Figma */}
+      {/* Fundo: luminosity + alinhamento no topo para preservar a parte superior da pessoa. */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-[min(800px,92svh)] max-lg:h-[min(520px,70svh)] mix-blend-luminosity lg:h-[800px]"
@@ -135,7 +135,7 @@ export function Testimonials() {
             <img
               src={slide.image}
               alt=""
-              className="absolute left-0 top-[-4.56%] h-[125.95%] w-full max-w-none object-cover object-center"
+              className="absolute left-0 top-0 h-full w-full max-w-none object-cover object-top"
               sizes="(min-width: 1512px) 1512px, 100vw"
               decoding="async"
             />

@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { FaIcon } from "@/components/icons/FaIcon";
-import { faCheck } from "@/lib/fa-icons";
+import { faArrowsRotate, faCheck, faDollarSign, faGift } from "@/lib/fa-icons";
 import { useActiveProfile } from "@/lib/profile-content";
 import type { ProfileTabId } from "@/lib/profile-tabs";
 
@@ -65,6 +65,27 @@ const PROFILE_CONTENT: Record<
 const IMAGE_EXIT_MS = 200;
 const IMAGE_IN_MS = 300;
 
+const RESULT_HIGHLIGHTS_BY_PROFILE: Record<
+  ProfileId,
+  readonly { label: string; icon: typeof faGift }[]
+> = {
+  distribuidor: [
+    { label: "Cashback em compras recorrentes", icon: faArrowsRotate },
+    { label: "Benefícios exclusivos", icon: faGift },
+    { label: "Mais lucro em cada pedido", icon: faDollarSign },
+  ],
+  representante: [
+    { label: "Comissão recorrente", icon: faArrowsRotate },
+    { label: "Mais clientes ativos", icon: faGift },
+    { label: "Oportunidades de recompra", icon: faDollarSign },
+  ],
+  profissional: [
+    { label: "Mais retorno de clientes", icon: faArrowsRotate },
+    { label: "Ticket médio maior", icon: faGift },
+    { label: "Fidelização no salão", icon: faDollarSign },
+  ],
+};
+
 /** Imagem 1:1 + legenda — sequência: saída → troca → entrada com scale (só transform/opacity). */
 function ProfilePreviewImage({ profileId }: { profileId: ProfileId }) {
   const reduceMotion = useReducedMotion();
@@ -72,7 +93,7 @@ function ProfilePreviewImage({ profileId }: { profileId: ProfileId }) {
   const enterDelay = 0;
 
   return (
-    <div className="relative flex w-full flex-col items-start gap-4">
+    <div className="relative flex w-full flex-col items-start gap-6">
       <div
         className="relative w-full max-w-[390px] shrink-0 self-start rounded-3xl shadow-[0_1px_3px_rgba(64,81,81,0.04),0_12px_36px_rgba(64,81,81,0.06)] ring-1 ring-black/[0.06] sm:max-w-[408px]"
       >
@@ -109,7 +130,7 @@ function ProfilePreviewImage({ profileId }: { profileId: ProfileId }) {
             delay: reduceMotion ? 0 : enterDelay + IMAGE_IN_MS / 1000 * 0.35,
             ease: "easeOut",
           }}
-          className="m-0 w-full max-w-[22rem] font-sans text-[24px] font-normal leading-snug text-[#505052] lg:max-w-none"
+          className="m-0 w-full max-w-[22rem] font-sans text-[24px] font-medium leading-snug text-[#1f6665] lg:max-w-none"
         >
           “{imageCaption}”
         </motion.p>
@@ -160,10 +181,10 @@ function ToolsProfileStoryPanel({ profileId }: { profileId: ProfileId }) {
             className="flex items-start gap-3"
           >
             <span
-              className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#e4f3f2] text-[#1f6665]"
+              className="mt-1.5 flex h-4 w-4 shrink-0 items-center justify-center text-[#1f6665]/60"
               aria-hidden
             >
-              <FaIcon icon={faCheck} className="h-3 w-3" />
+              <FaIcon icon={faCheck} className="h-2.5 w-2.5" />
             </span>
             <span className="min-w-0 pt-0.5 font-sans text-base font-medium leading-6 text-[#505052]">
               {line}
@@ -177,11 +198,12 @@ function ToolsProfileStoryPanel({ profileId }: { profileId: ProfileId }) {
 
 export function Tools() {
   const active = useActiveProfile();
+  const resultHighlights = RESULT_HIGHLIGHTS_BY_PROFILE[active];
 
   return (
     <Section
       id="ferramentas-para-vender-mais-com-menos-esforco"
-      className="overflow-x-clip bg-[#f4f7f7] py-14 md:py-20 lg:py-[100px]"
+      className="overflow-x-clip bg-white py-14 md:py-20 lg:py-[100px]"
       aria-labelledby="tools-heading"
     >
       <Container>
@@ -192,7 +214,9 @@ export function Tools() {
               {/* BLOCO 1 */}
               <div className="flex max-w-[560px] flex-col gap-6">
                 <header className="space-y-3">
-                  <p className="font-sans text-xs font-bold uppercase tracking-[1.5px] text-[#1f6665]">Produto</p>
+                  <p className="font-sans text-xs font-bold uppercase tracking-[1.5px] text-[#1f6665]">
+                    Gestão inteligente da operação
+                  </p>
                   <h2
                     id="tools-heading"
                     className="font-display text-[28px] font-semibold leading-9 text-[#1e1e1f] [font-feature-settings:'lnum'_1,'tnum'_1] lg:text-[32px] lg:leading-10"
@@ -219,6 +243,21 @@ export function Tools() {
                   <ToolsProfileStoryPanel key={active} profileId={active} />
                 </AnimatePresence>
               </div>
+
+              <div className="max-w-[560px] pt-5 lg:pt-6">
+                <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+                  {resultHighlights.map(({ label, icon }) => (
+                    <div key={label} className="card-border-shell card-border-r12 w-full sm:w-auto">
+                      <div className="card-border-inner card-border-r12 flex min-h-[52px] items-center gap-3 bg-white py-2 pl-3 pr-6 sm:h-[52px] sm:min-h-0">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#4aaaa91a] text-[#1f6665]">
+                          <FaIcon icon={icon} className="h-4 w-4" aria-hidden />
+                        </span>
+                        <span className="font-sans text-base font-semibold leading-5 text-[#1f6665]">{label}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Coluna direita: apenas imagem (abaixo do conteúdo no mobile) */}
@@ -229,6 +268,7 @@ export function Tools() {
               <ProfilePreviewImage profileId={active} />
             </aside>
           </div>
+
         </div>
       </Container>
     </Section>

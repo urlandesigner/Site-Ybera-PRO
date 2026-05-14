@@ -67,7 +67,21 @@
     background-position: var(--bg-size, 300%) 0;
     }
   }
-}
+  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
+  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear
+;
+  @keyframes shimmer-slide {
+  to {
+    transform: translate(calc(100cqw - 100%), 0);}}
+  @keyframes spin-around {
+  0% {
+    transform: translateZ(0) rotate(0);}
+  15%, 35% {
+    transform: translateZ(0) rotate(90deg);}
+  65%, 85% {
+    transform: translateZ(0) rotate(270deg);}
+  100% {
+    transform: translateZ(0) rotate(360deg);}}}
 
 * {
   box-sizing: border-box;
@@ -162,6 +176,33 @@ body {
 
 .card-border-inner.card-border-r20 {
   border-radius: 19px;
+}
+
+/* Pills de persona (AudienceTabs, Final CTA): fundo/borda derivados de --pill-r/g/b + hover suave. */
+.persona-editorial-pill {
+  border-color: rgba(var(--pill-r), var(--pill-g), var(--pill-b), 0.22);
+  background-color: rgba(var(--pill-r), var(--pill-g), var(--pill-b), 0.09);
+  transition:
+    transform 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.persona-editorial-pill:hover {
+  transform: translateY(-1px);
+  background-color: rgba(var(--pill-r), var(--pill-g), var(--pill-b), 0.13);
+  border-color: rgba(var(--pill-r), var(--pill-g), var(--pill-b), 0.28);
+  box-shadow:
+    0 3px 10px rgba(16, 24, 40, 0.06),
+    0 2px 4px rgba(16, 24, 40, 0.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .persona-editorial-pill,
+  .persona-editorial-pill:hover {
+    transform: none;
+  }
 }
 
 /**

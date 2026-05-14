@@ -11,10 +11,8 @@ import { HeroStatCounters } from "@/components/sections/HeroStatCounters";
 /** Fundo da hero: arte final em `public/images/Hero@2x.jpg` (sem filtros no código). */
 const imgHeroBackground = "/images/Hero@2x.jpg";
 const imgLine = "/images/Lines.svg";
-const imgMaleAvatar07 =
-  "https://www.figma.com/api/mcp/asset/0bea5da5-6968-46bd-bc6e-1c33ebbc872e";
-const imgMaleAvatar8 =
-  "https://www.figma.com/api/mcp/asset/58063757-53b8-4198-8362-d3eeb8e58b98";
+const imgAvatar1 = "/images/avatar1.png";
+const imgAvatar2 = "/images/avatar2.png";
 
 export function Hero() {
   return (
@@ -155,14 +153,14 @@ export function Hero() {
               </CometCard>
             </div>
 
-            <div className="absolute -left-11 top-[401px] z-[3] w-[361px] max-w-[calc(100%+2.75rem)] rounded-[16px] bg-[rgba(255,255,255,0.460)] p-3 shadow-[0_10px_30px_rgba(0,0,0,0.204)] backdrop-blur-[16px] backdrop-saturate-[1.40] transition-all hover:bg-[rgba(255,255,255,0.560)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.218)] hover:backdrop-blur-[24px] max-lg:left-0 max-lg:right-auto max-lg:top-full max-lg:mt-8 max-lg:w-full">
-              <div className="pointer-events-none absolute inset-0 rounded-[16px] bg-[linear-gradient(135deg,rgba(255,255,255,0.20),rgba(255,255,255,0.02))]" />
+            <div className="absolute -left-11 top-[401px] z-[3] w-[361px] max-w-[calc(100%+2.75rem)] rounded-[16px] bg-[rgba(255,255,255,0.620)] p-3 shadow-[0_10px_30px_rgba(0,0,0,0.204)] backdrop-blur-[16px] backdrop-saturate-[1.40] transition-all hover:bg-[rgba(255,255,255,0.700)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.218)] hover:backdrop-blur-[24px] max-lg:left-0 max-lg:right-auto max-lg:top-full max-lg:mt-8 max-lg:w-full">
+              <div className="pointer-events-none absolute inset-0 rounded-[16px] bg-[linear-gradient(135deg,rgba(255,255,255,0.24),rgba(255,255,255,0.04))]" />
               <div className="flex items-center gap-3">
                 <div className="relative size-12 shrink-0 overflow-hidden rounded-[32px]">
                   <img
-                    src={imgMaleAvatar07}
+                    src={imgAvatar2}
                     alt=""
-                    className="absolute left-[-12%] top-0 h-[125%] w-[156%] max-w-none object-cover"
+                    className="absolute inset-0 h-full w-full object-contain object-center"
                   />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -177,10 +175,10 @@ export function Hero() {
               </div>
             </div>
 
-            <div className="absolute left-[201px] top-[-59px] z-[3] w-[328px] max-w-[calc(100%-1rem)] rounded-[16px] bg-[rgba(255,255,255,0.460)] p-3 shadow-[0_10px_30px_rgba(0,0,0,0.204)] backdrop-blur-[16px] backdrop-saturate-[1.40] transition-all hover:bg-[rgba(255,255,255,0.560)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.218)] hover:backdrop-blur-[24px] max-lg:left-auto max-lg:right-0 max-lg:top-4">
-              <div className="pointer-events-none absolute inset-0 rounded-[16px] bg-[linear-gradient(135deg,rgba(255,255,255,0.20),rgba(255,255,255,0.02))]" />
+            <div className="absolute left-[201px] top-[-59px] z-[3] w-[328px] max-w-[calc(100%-1rem)] rounded-[16px] bg-[rgba(255,255,255,0.620)] p-3 shadow-[0_10px_30px_rgba(0,0,0,0.204)] backdrop-blur-[16px] backdrop-saturate-[1.40] transition-all hover:bg-[rgba(255,255,255,0.700)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.218)] hover:backdrop-blur-[24px] max-lg:left-auto max-lg:right-0 max-lg:top-4">
+              <div className="pointer-events-none absolute inset-0 rounded-[16px] bg-[linear-gradient(135deg,rgba(255,255,255,0.24),rgba(255,255,255,0.04))]" />
               <div className="flex items-center gap-3">
-                <img src={imgMaleAvatar8} alt="" className="size-12 shrink-0 rounded-full object-cover" />
+                <img src={imgAvatar1} alt="" className="size-12 shrink-0 rounded-full object-contain object-center" />
                 <div className="min-w-0 flex-1">
                   <p className="truncate font-display text-sm font-medium leading-5 text-[#1e1e1f] [font-feature-settings:'lnum'_1,'tnum'_1]">
                     Mariana Silva Santos

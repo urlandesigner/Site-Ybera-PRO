@@ -4,7 +4,7 @@ export const sectionOrder = [
   "Opportunity",
   "ControlPanel",
   "RecurringIncome",
-  "Benefits",
+  "ComoFunciona",
   "Tools",
   "Ecosystem",
   "AppPreview",

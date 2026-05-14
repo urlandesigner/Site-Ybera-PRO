@@ -1,24 +1,15 @@
 "use client";
 
-import type { KeyboardEvent } from "react";
-import { useEffect, useId, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
-
 import { Container } from "@/components/layout/Container";
 import { faCheck } from "@/lib/fa-icons";
 import { Section } from "@/components/layout/Section";
 import { FaIcon } from "@/components/icons/FaIcon";
 import { GlassProCta } from "@/components/ui/GlassProCta";
+import { PersonaEditorialPill } from "@/components/ui/PersonaEditorialPill";
 import { useActiveProfile } from "@/lib/profile-content";
 import type { ProfileTabId } from "@/lib/profile-tabs";
 
 type ProfileTab = ProfileTabId;
-
-const TABS: { id: ProfileTab; label: string }[] = [
-  { id: "distribuidor", label: "Distribuidor" },
-  { id: "representante", label: "Representante" },
-  { id: "profissional", label: "Profissional" },
-];
 
 /** Conteúdo do formulário por aba: hoje igual em todos; troque por perfil quando o copy existir. */
 const formByTab: Record<
@@ -85,9 +76,6 @@ const formByTab: Record<
   },
 };
 
-const tabBtnBase =
-  "relative z-10 min-h-11 min-w-0 flex-1 cursor-pointer rounded-lg border border-transparent bg-transparent px-3 py-2 text-center font-sans text-sm font-semibold transition-[color,transform,background-color] duration-200 ease-out motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f6665] focus-visible:ring-offset-2 min-[380px]:min-h-0 min-[380px]:py-[6px] active:scale-[0.98] motion-reduce:active:scale-100";
-
 const ctaContentByTab: Record<
   ProfileTab,
   {
@@ -132,50 +120,40 @@ const ctaContentByTab: Record<
   },
 };
 
+const formBadgeByTab: Record<
+  ProfileTab,
+  {
+    label: string;
+    color: string;
+  }
+> = {
+  distribuidor: {
+    label: "Distribuidor",
+    color: "#1f6665",
+  },
+  representante: {
+    label: "Representante",
+    color: "#435950",
+  },
+  profissional: {
+    label: "Profissional",
+    color: "#1f3f7a",
+  },
+};
+
 export function FinalCTA() {
-  const [tab, setTab] = useState<ProfileTab>("distribuidor");
-  const uid = useId();
-  const router = useRouter();
-  const pathname = usePathname();
-  const activeProfile = useActiveProfile();
+  const tab = useActiveProfile();
   const form = formByTab[tab];
   const ctaContent = ctaContentByTab[tab];
-  const tabIndex = TABS.findIndex((t) => t.id === tab);
-
-  useEffect(() => {
-    setTab(activeProfile);
-  }, [activeProfile]);
-
-  const selectTab = (id: ProfileTab) => {
-    setTab(id);
-    const next = new URLSearchParams(window.location.search);
-    next.set("perfil", id);
-    router.replace(`${pathname}?${next.toString()}#final-cta`, { scroll: false });
-  };
-
-  const onTabKeyDown = (e: KeyboardEvent<HTMLButtonElement>, currentId: ProfileTab) => {
-    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft" && e.key !== "Home" && e.key !== "End") return;
-    e.preventDefault();
-    const idx = TABS.findIndex((t) => t.id === currentId);
-    if (e.key === "Home") {
-      selectTab(TABS[0]!.id);
-      return;
-    }
-    if (e.key === "End") {
-      selectTab(TABS[TABS.length - 1]!.id);
-      return;
-    }
-    const next =
-      e.key === "ArrowRight"
-        ? (idx + 1) % TABS.length
-        : (idx - 1 + TABS.length) % TABS.length;
-    selectTab(TABS[next]!.id);
-  };
+  const formBadge = formBadgeByTab[tab];
 
   return (
     <Section
       id="final-cta"
-      className="relative overflow-hidden bg-[linear-gradient(121deg,#132424_4%,#1e1e1f_52%,#092929_110%)] py-14 md:py-20 lg:py-[100px]"
+      className="relative overflow-hidden bg-[#132424] bg-cover bg-center py-14 md:py-20 lg:py-[100px]"
+      style={{
+        backgroundImage: "url('/images/bg-forms.jpg')",
+      }}
     >
       <Container>
         <div className="grid items-start gap-8 lg:grid-cols-[1fr_520px] lg:gap-9">
@@ -195,7 +173,7 @@ export function FinalCTA() {
             <div className="space-y-3">
               {ctaContent.bullets.map((item) => (
                 <div key={item} className="card-border-shell card-border-r12 w-full lg:w-fit">
-                  <div className="card-border-inner card-border-r12 flex min-h-[52px] items-center gap-3 bg-white px-3 py-2 sm:h-[52px] sm:min-h-0">
+                  <div className="card-border-inner card-border-r12 flex min-h-[52px] items-center gap-3 bg-white py-2 pl-3 pr-6 sm:h-[52px] sm:min-h-0">
                     <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#4aaaa91a] text-[#1f6665]">
                       <FaIcon icon={faCheck} className="h-4 w-4" aria-hidden />
                     </span>
@@ -206,99 +184,53 @@ export function FinalCTA() {
             </div>
           </div>
 
-          <div className="card-border-shell card-border-r20">
-            <div className="card-border-inner card-border-r20 bg-[#faf9fc] p-6">
-              <div className="rounded-xl border border-[#e2e1e5] bg-white p-[6px]">
+          <div className="rounded-[28px] bg-white/20 p-2">
+            <div className="rounded-[20px] bg-[#faf9fc] p-6">
                 <div
-                  role="tablist"
-                  aria-label="Tipo de cadastro"
-                  className="relative grid grid-cols-1 gap-1 min-[380px]:grid-cols-3"
+                  key={tab}
+                  className="motion-safe:[animation:cta-tab-panel-in_0.42s_cubic-bezier(0.32,0.72,0,1)_both] motion-reduce:[animation:none]"
                 >
-                  <span
-                    aria-hidden
-                    className={[
-                      "pointer-events-none absolute hidden rounded-md bg-[#ecebf0]",
-                      "shadow-[0_1px_2px_rgba(30,30,31,0.06)]",
-                      "transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none",
-                      "min-[380px]:block",
-                    ].join(" ")}
-                    style={{
-                      top: "2px",
-                      bottom: "2px",
-                      width: "calc((100% - 0.5rem) / 3)",
-                      transform: `translateX(calc(${tabIndex} * (100% + 0.25rem)))`,
-                    }}
-                  />
-                  {TABS.map(({ id, label }) => {
-                    const selected = tab === id;
-                    return (
-                      <button
-                        key={id}
-                        type="button"
-                        role="tab"
-                        id={`${uid}-tab-${id}`}
-                        aria-selected={selected}
-                        aria-controls={`${uid}-panel`}
-                        onClick={() => selectTab(id)}
-                        onKeyDown={(e) => onTabKeyDown(e, id)}
-                        className={[
-                          tabBtnBase,
-                          selected
-                            ? "text-[#1e1e1f] max-[379px]:bg-[#ecebf0]"
-                            : "text-[#505052] hover:bg-[#f4f3f7]/90 max-[379px]:hover:bg-[#f4f3f7]",
-                        ].join(" ")}
-                      >
-                        {label}
-                      </button>
-                    );
-                  })}
+                  <PersonaEditorialPill accentColor={formBadge.color} className="mb-5">
+                    {formBadge.label}
+                  </PersonaEditorialPill>
+
+                  <h3 className="font-display text-xl font-semibold leading-7 text-[#1e1e1f] lg:text-2xl lg:leading-8">
+                    {form.heading}
+                  </h3>
+
+                  <div className="mt-6 space-y-6">
+                    {form.rows.map((pair, rowIdx) => (
+                      <div key={rowIdx} className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        {pair.map(([label, placeholder]) => (
+                          <label key={label} className="space-y-2">
+                            <span className="block font-sans text-sm text-[#1e1e1f]">{label}</span>
+                            <input
+                              className="h-11 w-full rounded-xl border border-[#c9c8cc] bg-white px-3 font-sans text-sm text-[#1e1e1f]"
+                              placeholder={placeholder}
+                              readOnly
+                            />
+                          </label>
+                        ))}
+                      </div>
+                    ))}
+
+                    <label className="block space-y-2">
+                      <span className="block font-sans text-sm text-[#1e1e1f]">{form.cityLabel}</span>
+                      <input
+                        className="h-11 w-full rounded-xl border border-[#c9c8cc] bg-white px-3 font-sans text-sm text-[#1e1e1f]"
+                        placeholder={form.cityPlaceholder}
+                        readOnly
+                      />
+                    </label>
+                  </div>
+
+                  <div className="mt-9 space-y-[18px]">
+                    <GlassProCta type="button" tone="light" className="w-full">
+                      {form.submitLabel}
+                    </GlassProCta>
+                    <p className="text-center font-sans text-xs leading-4 text-[#505052]">{form.footnote}</p>
+                  </div>
                 </div>
-              </div>
-
-              <div
-                key={tab}
-                id={`${uid}-panel`}
-                role="tabpanel"
-                aria-labelledby={`${uid}-tab-${tab}`}
-                className="mt-9 space-y-6 motion-safe:[animation:cta-tab-panel-in_0.42s_cubic-bezier(0.32,0.72,0,1)_both] motion-reduce:[animation:none]"
-              >
-                <h3 className="font-display text-xl font-semibold leading-7 text-[#1e1e1f] lg:text-2xl lg:leading-8">
-                  {form.heading}
-                </h3>
-
-                <div className="space-y-6">
-                  {form.rows.map((pair, rowIdx) => (
-                    <div key={rowIdx} className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                      {pair.map(([label, placeholder]) => (
-                        <label key={label} className="space-y-2">
-                          <span className="block font-sans text-sm text-[#1e1e1f]">{label}</span>
-                          <input
-                            className="h-11 w-full rounded-xl border border-[#c9c8cc] bg-white px-3 font-sans text-sm text-[#1e1e1f]"
-                            placeholder={placeholder}
-                            readOnly
-                          />
-                        </label>
-                      ))}
-                    </div>
-                  ))}
-
-                  <label className="block space-y-2">
-                    <span className="block font-sans text-sm text-[#1e1e1f]">{form.cityLabel}</span>
-                    <input
-                      className="h-11 w-full rounded-xl border border-[#c9c8cc] bg-white px-3 font-sans text-sm text-[#1e1e1f]"
-                      placeholder={form.cityPlaceholder}
-                      readOnly
-                    />
-                  </label>
-                </div>
-
-                <div className="space-y-[18px]">
-                  <GlassProCta type="button" tone="light" className="w-full">
-                    {form.submitLabel}
-                  </GlassProCta>
-                  <p className="text-center font-sans text-xs leading-4 text-[#505052]">{form.footnote}</p>
-                </div>
-              </div>
             </div>
           </div>
         </div>

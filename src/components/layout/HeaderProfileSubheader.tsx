@@ -29,6 +29,7 @@ const barVariants = {
 
 const activeBarVariant = barVariants.barrav2;
 const APPEAR_AFTER_SECTION_ID = "benefits";
+const HIDE_AT_SECTION_ID = "faq";
 const REVEAL_OFFSET_PX = 96;
 
 /** Conteúdo compacto para o padding externo de 8px ficar visível em todos os lados. */
@@ -90,6 +91,12 @@ export function HeaderProfileSubheader() {
 
   useEffect(() => {
     const updateVisibility = () => {
+      const hideSection = document.getElementById(HIDE_AT_SECTION_ID);
+      if (hideSection && hideSection.getBoundingClientRect().top <= REVEAL_OFFSET_PX) {
+        setIsVisible(false);
+        return;
+      }
+
       const section = document.getElementById(APPEAR_AFTER_SECTION_ID);
       if (!section) {
         setIsVisible(false);
@@ -112,7 +119,7 @@ export function HeaderProfileSubheader() {
   return (
     <div
       className={cn(
-        "fixed left-0 right-0 z-40 top-[calc(env(safe-area-inset-top,0px)+4rem+0.75rem)] transition-[opacity,transform] duration-300 ease-out",
+        "fixed left-0 right-0 z-40 top-[calc(env(safe-area-inset-top,0px)+4rem+0.375rem)] transition-[opacity,transform] duration-300 ease-out",
         isVisible ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none -translate-y-1 opacity-0",
       )}
       aria-hidden={!isVisible}
@@ -126,7 +133,7 @@ export function HeaderProfileSubheader() {
 export function HeaderProfileSubheaderFallback() {
   return (
     <div
-      className="pointer-events-none fixed left-0 right-0 z-40 top-[calc(env(safe-area-inset-top,0px)+4rem+0.75rem)] -translate-y-1 opacity-0"
+      className="pointer-events-none fixed left-0 right-0 z-40 top-[calc(env(safe-area-inset-top,0px)+4rem+0.375rem)] -translate-y-1 opacity-0"
       aria-hidden
     >
       <ProfileBarContent resolved="distribuidor" />
