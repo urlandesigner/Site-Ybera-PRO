@@ -10,7 +10,7 @@ type PersonaEditorialPillProps = PropsWithChildren<{
 }>;
 
 /**
- * Pill editorial para labels de persona (Title Case).
+ * Pill editorial para labels de persona (texto em uppercase via CSS).
  * Estilo global `.persona-editorial-pill` (globals.css): fundo/borda a partir do accent, hover suave.
  */
 export function PersonaEditorialPill({ accentColor, className, children }: PersonaEditorialPillProps) {
@@ -19,7 +19,7 @@ export function PersonaEditorialPill({ accentColor, className, children }: Perso
     <span
       className={cn(
         "persona-editorial-pill inline-flex w-fit items-center justify-center rounded-full border border-solid",
-        "px-5 py-2.5 font-sans text-[14px] font-semibold leading-none tracking-[0.08em]",
+        "px-3.5 py-1.5 font-sans text-xs font-semibold uppercase leading-none tracking-[0.08em]",
         "shadow-[0_2px_8px_rgba(16,24,40,0.04),0_1px_2px_rgba(16,24,40,0.03)]",
         "motion-reduce:transition-none",
         className,
